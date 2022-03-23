@@ -11,6 +11,7 @@ import { useState } from 'react';
 import './styles/default.less'
 
 const { Header, Sider, Content } = Layout;
+const { SubMenu } = Menu;
 
 const DefaultLayout = () => {
   const [collapsed, setCollapsed] = useState<boolean>(false)
@@ -18,13 +19,15 @@ const DefaultLayout = () => {
     setCollapsed(!collapsed);
   };
   return (
-    <Layout>
+    <Layout className='layout'>
       <Sider trigger={null} collapsible collapsed={collapsed}>
-        <div className="logo"  >ssas </div>
+        <div className="logo"> {collapsed ? <h3>ALTUS</h3> : <h3>ALTUS COUCH</h3>} </div>
         <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
-          <Menu.Item key="1" icon={<UserOutlined />}>
-            nav 1
-          </Menu.Item>
+          <SubMenu key="access" icon={<UserOutlined />} title="Acceso">
+            <Menu.Item key="subUsers">Usuarios</Menu.Item>
+            <Menu.Item key="subPermissions">Permisos</Menu.Item>
+            <Menu.Item key="subProfiles">Perfiles</Menu.Item>
+          </SubMenu>
           <Menu.Item key="2" icon={<VideoCameraOutlined />}>
             nav 2
           </Menu.Item>
