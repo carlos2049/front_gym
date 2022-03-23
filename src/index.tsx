@@ -1,12 +1,24 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
+import { Provider } from 'react-redux'
+import { ConfigProvider } from 'antd';
+import store from './store'
+import Routes from './routes';
+import localeES from 'antd/es/locale/es_ES';
+
+// import './index.css';
 import reportWebVitals from './reportWebVitals';
+// import 'antd/dist/antd.css'
+import 'antd/dist/antd.min.css'
+import './styles.less'
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Provider store={store}>
+      <ConfigProvider locale={localeES}>
+        <Routes />
+      </ConfigProvider>
+    </Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );
