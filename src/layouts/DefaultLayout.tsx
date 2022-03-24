@@ -1,5 +1,8 @@
 import React, { createElement } from 'react';
+import { Outlet, Link } from "react-router-dom";
+import Users from '../views/Users';
 import { Layout, Menu } from 'antd';
+
 import {
   MenuUnfoldOutlined,
   MenuFoldOutlined,
@@ -9,6 +12,7 @@ import {
 } from '@ant-design/icons';
 import { useState } from 'react';
 import './styles/default.less'
+// import Users from '../views/Users';
 
 const { Header, Sider, Content } = Layout;
 const { SubMenu } = Menu;
@@ -18,15 +22,19 @@ const DefaultLayout = () => {
   const toggle = () => {
     setCollapsed(!collapsed);
   };
+
+  const componentSelected = (e: Event) => {
+    console.log(e)
+  }
   return (
     <Layout className='layout'>
       <Sider trigger={null} collapsible collapsed={collapsed}>
         <div className="logo"> {collapsed ? <h3>ALTUS</h3> : <h3>ALTUS COUCH</h3>} </div>
         <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
           <SubMenu key="access" icon={<UserOutlined />} title="Acceso">
-            <Menu.Item key="subUsers">Usuarios</Menu.Item>
-            <Menu.Item key="subPermissions">Permisos</Menu.Item>
-            <Menu.Item key="subProfiles">Perfiles</Menu.Item>
+            <Menu.Item key="subUsers"> <Link to="/users">Usuarios </Link> </Menu.Item>
+            <Menu.Item key="subPermissions"><Link to="/permissions">Permisos </Link></Menu.Item>
+            <Menu.Item key="subProfiles"><Link to="/profiles">Perfiles </Link></Menu.Item>
           </SubMenu>
           <Menu.Item key="2" icon={<VideoCameraOutlined />}>
             nav 2
@@ -51,10 +59,11 @@ const DefaultLayout = () => {
             minHeight: 280,
           }}
         >
-          Content
+
+          <Outlet />
         </Content>
       </Layout>
-    </Layout>
+    </Layout >
   )
 }
 
