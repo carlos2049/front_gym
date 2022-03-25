@@ -13,13 +13,11 @@ import 'antd/dist/antd.min.css'
 import './styles.less'
 
 ReactDOM.render(
-  <React.StrictMode>
-    <Provider store={store}>
-      <ConfigProvider locale={localeES}>
-        <Routes />
-      </ConfigProvider>
-    </Provider>
-  </React.StrictMode>,
+  <Provider store={store}>
+    <ConfigProvider locale={localeES}>
+      <Routes />
+    </ConfigProvider>
+  </Provider>,
   document.getElementById('root')
 );
 

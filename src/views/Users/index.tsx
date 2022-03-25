@@ -1,4 +1,6 @@
-import { Table, Tag, Space } from 'antd';
+import { Table, Space, Button } from 'antd';
+import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
+
 
 const Users = () => {
   const columns = [
@@ -6,7 +8,7 @@ const Users = () => {
       title: 'Name',
       dataIndex: 'name',
       key: 'name',
-      render: (text: string) => <a>{text}</a>,
+      // render: (text: string) => <p>{text}</p>,
     },
     {
       title: 'Age',
@@ -23,8 +25,8 @@ const Users = () => {
       key: 'action',
       render: () => (
         <Space size="middle">
-          {/* <a>Invite {record.name}</a> */}
-          <a>Delete</a>
+          <Button type="link" icon={<EditOutlined />} shape="circle" />
+          <Button type="link" icon={<DeleteOutlined />} shape="circle" />
         </Space>
       ),
     },

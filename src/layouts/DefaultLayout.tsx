@@ -1,6 +1,5 @@
-import React, { createElement } from 'react';
+import { createElement } from 'react';
 import { Outlet, Link } from "react-router-dom";
-import Users from '../views/Users';
 import { Layout, Menu } from 'antd';
 
 import {
@@ -23,9 +22,6 @@ const DefaultLayout = () => {
     setCollapsed(!collapsed);
   };
 
-  const componentSelected = (e: Event) => {
-    console.log(e)
-  }
   return (
     <Layout className='layout'>
       <Sider trigger={null} collapsible collapsed={collapsed}>
@@ -59,7 +55,6 @@ const DefaultLayout = () => {
             minHeight: 280,
           }}
         >
-
           <Outlet />
         </Content>
       </Layout>
