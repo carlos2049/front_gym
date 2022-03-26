@@ -1,24 +1,38 @@
-import { Table, Space, Button } from 'antd';
+import { Table, Space, Button, Switch } from 'antd';
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
-
+import './styles.less'
 
 const Users = () => {
+
+  const onChange = (checked: boolean) => {
+    console.log(`switch to ${checked}`);
+  }
   const columns = [
     {
-      title: 'Name',
+      title: 'Nombre',
       dataIndex: 'name',
       key: 'name',
       // render: (text: string) => <p>{text}</p>,
     },
     {
-      title: 'Age',
-      dataIndex: 'age',
-      key: 'age',
+      title: 'Rut',
+      dataIndex: 'rut',
+      key: 'rut',
     },
     {
-      title: 'Address',
-      dataIndex: 'address',
-      key: 'address',
+      title: 'Telefono',
+      dataIndex: 'phone',
+      key: 'phone',
+    },
+    {
+      title: 'Email',
+      dataIndex: 'email',
+      key: 'email',
+    },
+    {
+      title: 'Perfil',
+      dataIndex: 'profile',
+      key: 'profile',
     },
     {
       title: 'Action',
@@ -32,31 +46,20 @@ const Users = () => {
     },
   ];
 
-  const data = [
+  const data: object[] = [
     {
       key: '1',
       name: 'John Brown',
-      age: 32,
-      address: 'New York No. 1 Lake Park',
+      rut: '67123456-7',
+      phone: '+569 87654356',
       tags: ['nice', 'developer'],
-    },
-    {
-      key: '2',
-      name: 'Jim Green',
-      age: 42,
-      address: 'London No. 1 Lake Park',
-      tags: ['loser'],
-    },
-    {
-      key: '3',
-      name: 'Joe Black',
-      age: 32,
-      address: 'Sidney No. 1 Lake Park',
-      tags: ['cool', 'teacher'],
-    },
+    }
   ];
   return (
     <>
+      <div className='button-active-switch'>
+        <Switch defaultChecked onChange={onChange} />
+      </div>
       <Table columns={columns} dataSource={data} />
     </>)
 }

@@ -24,7 +24,7 @@ const Profiles = () => {
       key: 'action',
       render: () => (
         <Space size="middle">
-          <Button type="link" icon={<EditOutlined />} shape="circle" />
+          <Button type="link" icon={<EditOutlined />} shape="circle" onClick={() => console.log('holaa')} />
           <Button type="link" icon={<DeleteOutlined />} shape="circle" />
         </Space>
       ),
