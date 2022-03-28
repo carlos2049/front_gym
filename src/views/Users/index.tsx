@@ -1,8 +1,19 @@
+import { useEffect } from 'react'
 import { Table, Space, Button, Switch } from 'antd';
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
+import { fetchAllUsers } from '../../store/slices/users'
+import { useDispatch, useSelector } from 'react-redux'
 import './styles.less'
 
 const Users = () => {
+
+  const { list } = useSelector((state: any) => state.users)
+
+  console.log(list)
+  const dispatch = useDispatch()
+  useEffect(() => {
+    dispatch(fetchAllUsers())
+  }, [dispatch])
 
   const onChange = (checked: boolean) => {
     console.log(`switch to ${checked}`);
@@ -60,7 +71,7 @@ const Users = () => {
       <div className='button-active-switch'>
         <Switch defaultChecked onChange={onChange} />
       </div>
-      <Table columns={columns} dataSource={data} />
+      <Table columns={columns} dataSource={list ? list : []} />
     </>)
 }
 
