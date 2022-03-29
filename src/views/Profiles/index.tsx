@@ -1,20 +1,28 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { fetchAllProfiles } from '../../store/slices/profiles';
 import { useDispatch, useSelector } from 'react-redux'
-import { Table, Space, Button } from 'antd';
+import { Table, Space, Button, Pagination, Switch } from 'antd';
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 
 
 const Profiles = () => {
 
+  const [page, setPage] = useState<number>(1)
   const { list } = useSelector((state: any) => state.profiles)
   const dispatch = useDispatch()
+  // const page: number = 1
+  const limit: number = 5
   useEffect(() => {
-    dispatch(fetchAllProfiles())
-  }, [])
+    dispatch(fetchAllProfiles(limit, page))
+  }, [page])
 
-  console.log('prfiles', list)
+  const handleSwitch = (checked: boolean) => {
+    console.log(`switch to ${checked}`);
+  }
 
+  const handlePagination = (page: number, pagesize: number) => {
+    setPage(page)
+  }
 
   const columns = [
     {
@@ -33,7 +41,7 @@ const Profiles = () => {
       key: 'action',
       render: () => (
         <Space size="middle">
-          <Button type="link" icon={<EditOutlined />} shape="circle" onClick={() => console.log('holaa')} />
+          <Button type="link" icon={<EditOutlined />} shape="circle" />
           <Button type="link" icon={<DeleteOutlined />} shape="circle" />
         </Space>
       ),
@@ -43,7 +51,14 @@ const Profiles = () => {
 
   return (
     <>
-      <Table columns={columns} dataSource={list ? list : []} />
+      <Switch defaultChecked onChange={handleSwitch} />
+      <Table columns={columns} rowKey='name' dataSource={list && list.rows ? list.rows : []} pagination={false} />
+      <Pagination
+        onChange={handlePagination}
+        defaultPageSize={limit}
+        defaultCurrent={1}
+        total={list.count}
+      />
     </>)
 }
 
