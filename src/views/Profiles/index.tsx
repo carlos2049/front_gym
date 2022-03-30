@@ -7,17 +7,17 @@ import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 
 const Profiles = () => {
 
-  const [page, setPage] = useState<number>(1)
-  const { list } = useSelector((state: any) => state.profiles)
   const dispatch = useDispatch()
-  // const page: number = 1
+  const [page, setPage] = useState<number>(1)
+  const [state, setState] = useState<boolean>(true)
+  const { list } = useSelector((state: any) => state.profiles)
   const limit: number = 5
   useEffect(() => {
-    dispatch(fetchAllProfiles(limit, page))
-  }, [page])
+    dispatch(fetchAllProfiles(limit, page, state))
+  }, [dispatch, page, state])
 
   const handleSwitch = (checked: boolean) => {
-    console.log(`switch to ${checked}`);
+    setState(checked)
   }
 
   const handlePagination = (page: number, pagesize: number) => {
@@ -52,7 +52,12 @@ const Profiles = () => {
   return (
     <>
       <Switch defaultChecked onChange={handleSwitch} />
-      <Table columns={columns} rowKey='name' dataSource={list && list.rows ? list.rows : []} pagination={false} />
+      <Table
+        columns={columns}
+        dataSource={list && list.rows ? list.rows : []}
+        rowKey='name'
+        pagination={false}
+      />
       <Pagination
         onChange={handlePagination}
         defaultPageSize={limit}

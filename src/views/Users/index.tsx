@@ -57,22 +57,14 @@ const Users = () => {
     },
   ];
 
-  const data: object[] = [
-    {
-      key: '1',
-      name: 'John Brown',
-      rut: '67123456-7',
-      phone: '+569 87654356',
-      tags: ['nice', 'developer'],
-    }
-  ];
   return (
     <>
       <div className='button-active-switch'>
         <Switch defaultChecked onChange={onChange} />
       </div>
-      <Table columns={columns} dataSource={list ? list : []} />
-    </>)
+      <Table columns={columns} rowKey='email' dataSource={list ? list : []} />
+    </>
+  )
 }
 
 export default Users
