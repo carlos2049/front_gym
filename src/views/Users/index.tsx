@@ -1,28 +1,35 @@
-import { useEffect } from 'react'
-import { Table, Space, Button, Switch } from 'antd';
+import { useEffect, useState } from 'react'
+import { Table, Space, Button, Switch, Pagination } from 'antd';
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import { fetchAllUsers } from '../../store/slices/users'
 import { useDispatch, useSelector } from 'react-redux'
 import './styles.less'
 
 const Users = () => {
+  const [page, setPage] = useState<number>(1)
+  const [state, setState] = useState<boolean>(true)
 
   const { list } = useSelector((state: any) => state.users)
 
-  console.log(list)
+  const limit: number = 5
+
   const dispatch = useDispatch()
   useEffect(() => {
-    dispatch(fetchAllUsers())
-  }, [dispatch])
+    dispatch(fetchAllUsers(limit, page, state))
+  }, [dispatch, page, state])
 
   const onChange = (checked: boolean) => {
-    console.log(`switch to ${checked}`);
+    setState(checked)
+
+  }
+  const handlePagination = (page: number, pagesize: number) => {
+    setPage(page)
   }
   const columns = [
     {
       title: 'Nombre',
-      dataIndex: 'name',
-      key: 'name',
+      dataIndex: 'names',
+      key: 'names',
       // render: (text: string) => <p>{text}</p>,
     },
     {
@@ -42,8 +49,8 @@ const Users = () => {
     },
     {
       title: 'Perfil',
-      dataIndex: 'profile',
-      key: 'profile',
+      dataIndex: 'id_perfil',
+      key: 'id_perfil',
     },
     {
       title: 'Action',
@@ -62,7 +69,18 @@ const Users = () => {
       <div className='button-active-switch'>
         <Switch defaultChecked onChange={onChange} />
       </div>
-      <Table columns={columns} rowKey='email' dataSource={list ? list : []} />
+      <Table columns={columns}
+        rowKey='email'
+        dataSource={list && list.rows ? list.rows : []}
+        pagination={false}
+
+      />
+      <Pagination
+        onChange={handlePagination}
+        defaultPageSize={limit}
+        defaultCurrent={1}
+        total={list.count}
+      />
     </>
   )
 }
