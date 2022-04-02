@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react'
 import { fetchAllProfiles } from '../../store/slices/profiles';
 import { useDispatch, useSelector } from 'react-redux'
-import { Table, Space, Button, Pagination, Switch } from 'antd';
+import { Space, Button } from 'antd';
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
+import TableDefault from '../../components/TableDefault';
 
 
 const Profiles = () => {
@@ -16,11 +17,11 @@ const Profiles = () => {
     dispatch(fetchAllProfiles(limit, page, state))
   }, [dispatch, page, state])
 
-  const handleSwitch = (checked: boolean) => {
+  const handleSwitch = (checked: boolean): void => {
     setState(checked)
   }
 
-  const handlePagination = (page: number, pagesize: number) => {
+  const handlePagination = (page: number, pagesize: number): void => {
     setPage(page)
   }
 
@@ -51,18 +52,13 @@ const Profiles = () => {
 
   return (
     <>
-      <Switch defaultChecked onChange={handleSwitch} />
-      <Table
+      <TableDefault
         columns={columns}
-        dataSource={list && list.rows ? list.rows : []}
+        list={list}
+        onChange={handleSwitch}
+        handlePagination={handlePagination}
+        limit={limit}
         rowKey='name'
-        pagination={false}
-      />
-      <Pagination
-        onChange={handlePagination}
-        defaultPageSize={limit}
-        defaultCurrent={1}
-        total={list.count}
       />
     </>)
 }

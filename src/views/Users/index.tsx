@@ -3,7 +3,18 @@ import { Table, Space, Button, Switch, Pagination } from 'antd';
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import { fetchAllUsers } from '../../store/slices/users'
 import { useDispatch, useSelector } from 'react-redux'
+import TableDefault from '../../components/TableDefault';
 import './styles.less'
+import { Obj } from 'reselect/es/types';
+import { ColumnsType } from 'antd/lib/table';
+import CreateUser from '../../components/Users/CreateUser';
+
+// interface IColumn {
+//   title: string,
+//   dataIndex: string,
+//   key: string,
+
+// }
 
 const Users = () => {
   const [page, setPage] = useState<number>(1)
@@ -25,6 +36,7 @@ const Users = () => {
   const handlePagination = (page: number, pagesize: number) => {
     setPage(page)
   }
+
   const columns = [
     {
       title: 'Nombre',
@@ -62,24 +74,18 @@ const Users = () => {
         </Space>
       ),
     },
-  ];
+  ]
 
   return (
     <>
-      <div className='button-active-switch'>
-        <Switch defaultChecked onChange={onChange} />
-      </div>
-      <Table columns={columns}
+      <CreateUser />
+      <TableDefault
+        columns={columns}
+        list={list}
+        onChange={onChange}
+        handlePagination={handlePagination}
+        limit={limit}
         rowKey='email'
-        dataSource={list && list.rows ? list.rows : []}
-        pagination={false}
-
-      />
-      <Pagination
-        onChange={handlePagination}
-        defaultPageSize={limit}
-        defaultCurrent={1}
-        total={list.count}
       />
     </>
   )
