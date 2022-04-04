@@ -1,21 +1,20 @@
 import { useState, useEffect } from 'react'
 import { Modal, Button, Form, Input, InputNumber, Select, DatePicker, Space } from 'antd';
 import { fetchAllProfiles } from '../../store/slices/profiles';
+import { createUser } from '../../store/endpoints'
 import { useDispatch, useSelector } from 'react-redux'
+import { IUser, IProfiles, IValues } from './interface';
 const { Option } = Select;
+const { TextArea } = Input
 
 const layout = {
   labelCol: { span: 8 },
   wrapperCol: { span: 16 },
 };
 
-interface IProfiles {
-  id: number
-  name: string,
-  state: boolean
-}
 
-const CreateUser = () => {
+
+const CreateUser: React.FC = () => {
   const dispatch = useDispatch()
   const state: boolean = true
 
@@ -30,8 +29,31 @@ const CreateUser = () => {
   const handleModal2Visible = (modal2Visible: any) => {
     setModal2Visible(modal2Visible);
   }
-  const onFinish = (values: any) => {
-    console.log(values);
+  const onFinish = (values: IValues) => {
+
+    const { user } = values
+
+    const userObj: IUser = {
+      id_perfil: user.perfil,
+      // id_sub_plan: values.sub,
+      rut: user.rut,
+      names: user.name,
+      first_last_name: user.firstLastname,
+      second_last_name: user.secondLastname,
+      sex: user.sex,
+      birth_date: user.birthdate,
+      address: user.address,
+      phone: user.phone,
+      email: user.email,
+      profession: user.profession,
+      image: user.image,
+      admission_date: user.admissionDate
+      // value_sub_plan: number,
+      // amount_months: number,
+      // total_plan: number,
+    } as IUser
+
+    // dispatch(createUser(values.user))
   };
 
   function onChange(date: any, dateString: string) {
@@ -42,7 +64,7 @@ const CreateUser = () => {
     required: '${label} es requerido',
     types: {
       email: 'No es un email valido',
-      number: '${label} is not a valid number!',
+      number: '${label} ingresado no es un valor numerico',
     },
     number: {
       range: '${label} must be between ${min} and ${max}',
@@ -74,7 +96,7 @@ const CreateUser = () => {
         }}
       >
         <Form.Item
-          name={['user', 'profile']}
+          name={['user', 'perfil']}
           label="Tipo Perfil"
           rules={[{ required: true, message: 'Seleccione Perfil' }]}
         >
@@ -103,31 +125,47 @@ const CreateUser = () => {
           </Form.Item>
           <Form.Item name={['user', 'sex']} label="Sexo" rules={[{ required: true }]}>
             <Select placeholder="Seleccionar Sexo">
-              <Option key={1} value={'man'}>Hombre</Option>
-              <Option key={2} value={'woman'}>Mujer</Option>
+              <Option key={1} value={false}>Hombre</Option>
+              <Option key={2} value={true}>Mujer</Option>
             </Select>
           </Form.Item>
           <Form.Item name={['user', 'birthdate']} label="Fecha Nacimiento" rules={[{ required: true }]}>
             <DatePicker onChange={onChange} />
           </Form.Item>
-          <Form.Item name={['user', 'address']} label="Direccion" rules={[{ required: true }]}>
+          <Form.Item name={['user', 'address']} label="Direccion" >
             <Input placeholder='Ejemplo: eucaliptus n° 32' />
           </Form.Item>
           <Form.Item name={['user', 'phone']} label="Celular" rules={[{ required: true }]}>
             <Input placeholder='Ejemplo: 9 87564352' />
           </Form.Item>
-          <Form.Item name={['user', 'email']} label="Email" rules={[{ required: true, type: 'email' }]}>
+          <Form.Item name={['user', 'email']} label="Email" rules={[{ required: true, type: 'email' }]} >
             <Input placeholder='Ejemplo: alguien@gmail.com' />
           </Form.Item>
-          <Form.Item name={['user', 'profession']} label="Cargo" rules={[{ required: true }]}>
-            <Input placeholder='Ejemplo: alguien@gmail.com' />
+          <Form.Item name={['user', 'profession']} label="Cargo" >
+            <Input placeholder='Ejemplo: profesor' />
           </Form.Item>
-          <Form.Item name={['user', 'user']} label="Usuario" rules={[{ required: true }]}>
+          <Form.Item name={['user', 'image']} label="imagen">
+            <Input placeholder='' />
+          </Form.Item>
+          <Form.Item name={['user', 'admissionDate']} label="Fecha ingreso" rules={[{ required: true }]}>
+            <DatePicker onChange={onChange} />
+          </Form.Item>
+          <Form.Item name={['user', 'salaryBase']} label="Sueldo base" rules={[{ type: 'number' }]}>
+            <Input placeholder='' />
+          </Form.Item>
+          <Form.Item name={['user', 'weeklyHours']} label="Horas semanales" rules={[{ type: 'number' }]}>
+            <Input placeholder='' />
+          </Form.Item>
+          {/* <Form.Item name={['user', 'user']} label="Usuario" rules={[{ required: true }]}>
             <Input placeholder='Ejemplo: Juan123' />
-          </Form.Item>
+          </Form.Item> */}
           <Form.Item name={['user', 'pass']} label="Clave" rules={[{ required: true, }]}>
             <Input.Password />
           </Form.Item>
+          <Form.Item name={['user', 'observations']} label="Observaciones" rules={[{ type: 'string' }]}>
+            <TextArea rows={4} />
+          </Form.Item>
+
 
         </div>
         <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
