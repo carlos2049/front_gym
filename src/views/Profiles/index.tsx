@@ -1,28 +1,21 @@
 import { useEffect, useState } from 'react'
 import { fetchAllProfiles } from '../../store/slices/profiles';
 import { useDispatch, useSelector } from 'react-redux'
-import { Space, Button } from 'antd';
+import { Table, Space, Button, Pagination, Switch } from 'antd';
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
-import TableDefault from '../../components/TableDefault';
 
 
 const Profiles = () => {
 
   const dispatch = useDispatch()
-  const [page, setPage] = useState<number>(1)
   const [state, setState] = useState<boolean>(true)
   const { list } = useSelector((state: any) => state.profiles)
-  const limit: number = 5
   useEffect(() => {
-    dispatch(fetchAllProfiles(limit, page, state))
-  }, [dispatch, page, state])
+    dispatch(fetchAllProfiles(state))
+  }, [dispatch, state])
 
-  const handleSwitch = (checked: boolean): void => {
+  const handleSwitch = (checked: boolean) => {
     setState(checked)
-  }
-
-  const handlePagination = (page: number, pagesize: number): void => {
-    setPage(page)
   }
 
   const columns = [
@@ -52,14 +45,19 @@ const Profiles = () => {
 
   return (
     <>
-      <TableDefault
+      <Switch defaultChecked onChange={handleSwitch} />
+      <Table
         columns={columns}
-        list={list}
-        onChange={handleSwitch}
-        handlePagination={handlePagination}
-        limit={limit}
+        dataSource={list && list.rows ? list.rows : []}
         rowKey='name'
+        pagination={false}
       />
+      {/* <Pagination
+        onChange={handlePagination}
+        defaultPageSize={limit}
+        defaultCurrent={1}
+        total={list.count}
+      /> */}
     </>)
 }
 

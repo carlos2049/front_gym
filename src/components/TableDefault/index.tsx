@@ -20,8 +20,6 @@ const TableDefault: React.FC<ITable> = ({ columns, list, onChange, handlePaginat
         }}
 
       />
-      {/* <Pagination
-      /> */}
     </>)
 }
 
