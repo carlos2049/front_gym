@@ -1,5 +1,6 @@
-import { useState, useEffect } from 'react'
-import { Modal, Button, Form, Input, InputNumber, Select, DatePicker, Space } from 'antd';
+import { useEffect, useState } from 'react'
+import moment from 'moment';
+import { Modal, Button, Form, Input, Select, DatePicker, InputNumber } from 'antd';
 import { fetchAllProfiles } from '../../store/slices/profiles';
 import { createUser } from '../../store/endpoints'
 import { useDispatch, useSelector } from 'react-redux'
@@ -13,21 +14,29 @@ const layout = {
 };
 
 
+interface ICreateUSer {
+  visible: boolean,
+  handleModalVisible: (checked: boolean) => void,
 
-const CreateUser: React.FC = () => {
+}
+
+
+const CreateUser: React.FC<ICreateUSer> = ({ visible, handleModalVisible }) => {
   const dispatch = useDispatch()
-  const state: boolean = true
+  const [date, setDate] = useState<string>()
+  const [form] = Form.useForm();
+
+  // const state: boolean = true
 
   const { list } = useSelector((state: any) => state.profiles)
   useEffect(() => {
-    dispatch(fetchAllProfiles(state))
+    dispatch(fetchAllProfiles(true))
   }, [dispatch])
-  console.log(list)
 
-  const [modal2Visible, setModal2Visible] = useState<boolean>(true)
 
-  const handleModal2Visible = (modal2Visible: any) => {
-    setModal2Visible(modal2Visible);
+  const handleModal = (visible: boolean) => {
+    form.resetFields()
+    handleModalVisible(visible)
   }
   const onFinish = (values: IValues) => {
 
@@ -47,17 +56,24 @@ const CreateUser: React.FC = () => {
       email: user.email,
       profession: user.profession,
       image: user.image,
-      admission_date: user.admissionDate
+      admission_date: user.admissionDate,
+      salary_base: user.salaryBase ? user.salaryBase : null,
+      weekly_hours: user.weeklyHours,
+      password: user.pass,
+      observations: user.observations
       // value_sub_plan: number,
       // amount_months: number,
       // total_plan: number,
     } as IUser
 
-    // dispatch(createUser(values.user))
+    dispatch(createUser({ ...userObj }))
   };
 
-  function onChange(date: any, dateString: string) {
-    console.log(date, dateString);
+  const onChange = (date: any, dateString: string) => {
+    // setDate)
+    // const fecha = moment(date).format('YYYY-MM-DD')
+    console.log('date', date);
+    setDate(date)
   }
 
   const validateMessages = {
@@ -71,6 +87,8 @@ const CreateUser: React.FC = () => {
     },
   };
 
+  console.log('date', date)
+
 
   return (<>
 
@@ -78,20 +96,22 @@ const CreateUser: React.FC = () => {
       width={"70%"}
       title="Crear Usuario"
       centered
-      visible={modal2Visible}
+      visible={visible}
       footer={null}
-      // onOk={() => handleModal2Visible(false)}
-      onCancel={() => handleModal2Visible(false)}
+      onOk={() => handleModalVisible(false)}
+      onCancel={() => handleModal(false)}
 
     >
-      <Form {...layout}
+      <Form
+        {...layout}
+        form={form}
         name="nest-messages"
         onFinish={onFinish}
         validateMessages={validateMessages}
         layout='vertical'
         initialValues={{
           user: {
-            name: 'carlos'
+            name: ''
           }
         }}
       >
@@ -130,7 +150,13 @@ const CreateUser: React.FC = () => {
             </Select>
           </Form.Item>
           <Form.Item name={['user', 'birthdate']} label="Fecha Nacimiento" rules={[{ required: true }]}>
-            <DatePicker onChange={onChange} />
+            {/* <DatePicker
+              format={'YYYY-MM-DD'}
+              onPanelChange={(date) => alert(date)}
+              onChange={onChange}
+              value={moment(date)}
+            /> */}
+            <Input type={'date'} />
           </Form.Item>
           <Form.Item name={['user', 'address']} label="Direccion" >
             <Input placeholder='Ejemplo: eucaliptus n° 32' />
@@ -147,14 +173,14 @@ const CreateUser: React.FC = () => {
           <Form.Item name={['user', 'image']} label="imagen">
             <Input placeholder='' />
           </Form.Item>
-          <Form.Item name={['user', 'admissionDate']} label="Fecha ingreso" rules={[{ required: true }]}>
+          {/* <Form.Item name={['user', 'admissionDate']} label="Fecha ingreso" rules={[{ required: true }]}>
             <DatePicker onChange={onChange} />
+          </Form.Item> */}
+          <Form.Item name={['user', 'salaryBase']} label="Sueldo base" rules={[{ required: true }]}>
+            <InputNumber placeholder='' />
           </Form.Item>
-          <Form.Item name={['user', 'salaryBase']} label="Sueldo base" rules={[{ type: 'number' }]}>
-            <Input placeholder='' />
-          </Form.Item>
-          <Form.Item name={['user', 'weeklyHours']} label="Horas semanales" rules={[{ type: 'number' }]}>
-            <Input placeholder='' />
+          <Form.Item name={['user', 'weeklyHours']} label="Horas semanales" rules={[{ required: true }]}>
+            <InputNumber placeholder='' />
           </Form.Item>
           {/* <Form.Item name={['user', 'user']} label="Usuario" rules={[{ required: true }]}>
             <Input placeholder='Ejemplo: Juan123' />

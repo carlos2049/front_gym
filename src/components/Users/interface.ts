@@ -62,7 +62,7 @@ export interface IValues {
     // allergies: string,
     // emergency_contact: string,
     // emergency_phone: string,
-    // observations: string,
+    observations: string,
     admissionDate: Date,
     salaryBase: number,
     weeklyHours: number,

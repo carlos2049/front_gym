@@ -19,6 +19,7 @@ import CreateUser from '../../components/Users/CreateUser';
 const Users = () => {
   const [page, setPage] = useState<number>(1)
   const [state, setState] = useState<boolean>(true)
+  const [modalVisible, setModalVisible] = useState<boolean>(false)
 
   const { list } = useSelector((state: any) => state.users)
 
@@ -33,6 +34,10 @@ const Users = () => {
     setState(checked)
 
   }
+  const handleModalVisible = (visible: any) => {
+    setModalVisible(visible);
+  }
+
   const handlePagination = (page: number, pagesize: number) => {
     setPage(page)
   }
@@ -78,7 +83,12 @@ const Users = () => {
 
   return (
     <>
-      <CreateUser />
+      <CreateUser
+        visible={modalVisible}
+        handleModalVisible={handleModalVisible}
+      />
+      <Button type="primary" onClick={handleModalVisible}>Primary Button</Button>
+      {/* <button onChange={handleModalVisible}></button> */}
       <TableDefault
         columns={columns}
         list={list}
