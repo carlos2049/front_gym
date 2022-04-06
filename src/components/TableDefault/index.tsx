@@ -7,7 +7,7 @@ const TableDefault: React.FC<ITable> = ({ columns, list, onChange, handlePaginat
   return (
     <div className='clase-papa'>
       <div className='button-active-switch'>
-        <Button type="primary" onClick={handleModalVisible}>Primary Button</Button>
+        <Button type="primary" onClick={handleModalVisible}>Crear Usuario</Button>
         <Switch defaultChecked onChange={onChange} />
       </div>
       <Table columns={columns}

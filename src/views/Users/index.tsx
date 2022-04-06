@@ -88,6 +88,7 @@ const Users = () => {
       <CreateUser
         visible={modalVisible}
         handleModalVisible={handleModalVisible}
+        fetchUsuers={fetchUsuers}
       />
       {/* <Button type="primary" onClick={handleModalVisible}>Primary Button</Button> */}
       {/* <button onChange={handleModalVisible}></button> */}

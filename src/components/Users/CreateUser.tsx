@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import moment from 'moment';
-import { Modal, Button, Form, Input, Select, DatePicker, InputNumber } from 'antd';
+import { Modal, Button, Form, Input, Select, DatePicker, InputNumber, Switch } from 'antd';
 import { fetchAllProfiles } from '../../store/slices/profiles';
 import { createUser } from '../../store/endpoints'
 import { useDispatch, useSelector } from 'react-redux'
@@ -17,11 +17,12 @@ const layout = {
 interface ICreateUSer {
   visible: boolean,
   handleModalVisible: (checked: boolean) => void,
+  fetchUsuers: () => void
 
 }
 
 
-const CreateUser: React.FC<ICreateUSer> = ({ visible, handleModalVisible }) => {
+const CreateUser: React.FC<ICreateUSer> = ({ visible, handleModalVisible, fetchUsuers }) => {
   const dispatch = useDispatch()
   const [date, setDate] = useState<string>()
   const [form] = Form.useForm();
@@ -37,6 +38,7 @@ const CreateUser: React.FC<ICreateUSer> = ({ visible, handleModalVisible }) => {
   const handleModal = (visible: boolean) => {
     form.resetFields()
     handleModalVisible(visible)
+    fetchUsuers()
   }
   const onFinish = (values: IValues) => {
 
@@ -73,7 +75,6 @@ const CreateUser: React.FC<ICreateUSer> = ({ visible, handleModalVisible }) => {
   const onChange = (date: any, dateString: string) => {
     // setDate)
     // const fecha = moment(date).format('YYYY-MM-DD')
-    console.log('date', date);
     setDate(date)
   }
 
@@ -87,9 +88,6 @@ const CreateUser: React.FC<ICreateUSer> = ({ visible, handleModalVisible }) => {
       range: '${label} must be between ${min} and ${max}',
     },
   };
-
-  console.log('date', date)
-
 
   return (<>
 
@@ -194,12 +192,14 @@ const CreateUser: React.FC<ICreateUSer> = ({ visible, handleModalVisible }) => {
 
 
         </div>
-        <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
-          <Button type="primary" htmlType="submit"> Crear </Button>
-        </Form.Item>
-        <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
-          <Button type="default" onClick={() => handleModal(false)} > Cancelar </Button>
-        </Form.Item>
+        <div className='footer-button'>
+          <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
+            <Button type="primary" htmlType="submit"> Crear </Button>
+          </Form.Item>
+          <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
+            <Button danger onClick={() => handleModal(false)} > Cancelar </Button>
+          </Form.Item>
+        </div>
       </Form>
     </Modal>
   </>)

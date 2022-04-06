@@ -66,7 +66,5 @@ export interface IValues {
     admissionDate: Date,
     salaryBase: number,
     weeklyHours: number,
-    // state: boolean
-
   }
 }
