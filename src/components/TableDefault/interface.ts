@@ -9,6 +9,7 @@ export interface ITable {
   handlePagination: (page: number, pagesize: number) => void,
   limit: number,
   rowKey: string,
-  handleModalVisible: (e: React.MouseEvent<HTMLElement, MouseEvent>) => void,
+  handleModalVisible: (visible: boolean) => void,
+  // handleModalVisible: (e: React.MouseEvent<HTMLElement, MouseEvent>) => void,
 
 }

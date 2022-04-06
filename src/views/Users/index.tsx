@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react'
-import { Table, Space, Button, Switch, Pagination } from 'antd';
+import { Table, Space, Button, Switch, Pagination, Popconfirm } from 'antd';
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import { fetchAllUsers } from '../../store/slices/users'
+import { ActivateAndDeactivate } from '../../store/endpoints'
 import { useDispatch, useSelector } from 'react-redux'
 import TableDefault from '../../components/TableDefault';
 import './styles.less'
@@ -32,7 +33,7 @@ const Users = () => {
   const onChange = (checked: boolean) => {
     setState(checked)
   }
-  const handleModalVisible = (visible: any) => {
+  const handleModalVisible = (visible: boolean) => {
     setModalVisible(visible);
   }
 
@@ -42,6 +43,14 @@ const Users = () => {
 
   const fetchUsuers = () => {
     dispatch(fetchAllUsers(limit, page, state))
+  }
+
+  const getUser = () => {
+
+  }
+
+  const deactivateUser = (id: number) => {
+    dispatch(ActivateAndDeactivate(id, fetchUsuers))
   }
 
   const columns = [
@@ -74,10 +83,20 @@ const Users = () => {
     {
       title: 'Action',
       key: 'action',
-      render: () => (
+      render: (rowKey: { id: number }) => (
         <Space size="middle">
-          <Button type="link" icon={<EditOutlined />} shape="circle" />
-          <Button type="link" icon={<DeleteOutlined />} shape="circle" />
+          <Button type="link" onClick={() => handleModalVisible(true)} icon={<EditOutlined />} shape="circle" />
+          <Popconfirm
+            title={`¿${state ? 'Desactivar' : 'Activar'} usuario?`}
+            onConfirm={() => deactivateUser(rowKey.id)}
+            onCancel={() => console.log('hola')}
+            okText="Yes"
+            cancelText="No"
+          >
+            <Button type="link" icon={<DeleteOutlined />} shape="circle" />
+          </Popconfirm>
+
+
         </Space>
       ),
     },
