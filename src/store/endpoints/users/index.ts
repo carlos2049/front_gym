@@ -7,9 +7,13 @@ export const fetchAllUsers = () => async (distpatch: (arg0: { payload: any; type
   distpatch(setUserList(users.data))
 }
 
-export const createUser = (user: Object) => async (distpatch: (arg0: { payload: any; type: string }) => void) => {
-  console.log('userss', user)
-  const users = await axios.post('http://localhost:3500/api/users', user
-  )
+export const createUser = (user: Object, handleModal: any) => async (distpatch: (arg0: { payload: any; type: string }) => void) => {
+  const res = await axios.post('http://localhost:3500/api/users', user)
+  if (res.status === 200 && res.data.success) {
+    return true
+  } else {
+    return false
+  }
+  console.log('ress', res)
   // distpatch(setUserList(users.data))
 }

@@ -1,11 +1,13 @@
 import React from 'react'
 import { Table, Space, Button, Switch, Pagination } from 'antd';
 import { ITable } from './interface';
+import './styles.less'
 
-const TableDefault: React.FC<ITable> = ({ columns, list, onChange, handlePagination, limit, rowKey }) => {
+const TableDefault: React.FC<ITable> = ({ columns, list, onChange, handlePagination, limit, rowKey, handleModalVisible }) => {
   return (
-    <>
+    <div className='clase-papa'>
       <div className='button-active-switch'>
+        <Button type="primary" onClick={handleModalVisible}>Primary Button</Button>
         <Switch defaultChecked onChange={onChange} />
       </div>
       <Table columns={columns}
@@ -20,7 +22,7 @@ const TableDefault: React.FC<ITable> = ({ columns, list, onChange, handlePaginat
         }}
 
       />
-    </>)
+    </div>)
 }
 
 export default TableDefault

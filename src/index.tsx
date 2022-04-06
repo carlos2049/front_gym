@@ -5,6 +5,7 @@ import { ConfigProvider } from 'antd';
 import store from './store'
 import Routes from './routes';
 import localeES from 'antd/es/locale/es_ES';
+import 'dayjs/locale/es'
 
 // import './index.css';
 import reportWebVitals from './reportWebVitals';

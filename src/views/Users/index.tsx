@@ -5,8 +5,7 @@ import { fetchAllUsers } from '../../store/slices/users'
 import { useDispatch, useSelector } from 'react-redux'
 import TableDefault from '../../components/TableDefault';
 import './styles.less'
-import { Obj } from 'reselect/es/types';
-import { ColumnsType } from 'antd/lib/table';
+
 import CreateUser from '../../components/Users/CreateUser';
 
 // interface IColumn {
@@ -32,7 +31,6 @@ const Users = () => {
 
   const onChange = (checked: boolean) => {
     setState(checked)
-
   }
   const handleModalVisible = (visible: any) => {
     setModalVisible(visible);
@@ -40,6 +38,10 @@ const Users = () => {
 
   const handlePagination = (page: number, pagesize: number) => {
     setPage(page)
+  }
+
+  const fetchUsuers = () => {
+    dispatch(fetchAllUsers(limit, page, state))
   }
 
   const columns = [
@@ -87,7 +89,7 @@ const Users = () => {
         visible={modalVisible}
         handleModalVisible={handleModalVisible}
       />
-      <Button type="primary" onClick={handleModalVisible}>Primary Button</Button>
+      {/* <Button type="primary" onClick={handleModalVisible}>Primary Button</Button> */}
       {/* <button onChange={handleModalVisible}></button> */}
       <TableDefault
         columns={columns}
@@ -96,6 +98,7 @@ const Users = () => {
         handlePagination={handlePagination}
         limit={limit}
         rowKey='email'
+        handleModalVisible={handleModalVisible}
       />
     </>
   )

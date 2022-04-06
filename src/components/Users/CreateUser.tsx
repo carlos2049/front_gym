@@ -66,7 +66,8 @@ const CreateUser: React.FC<ICreateUSer> = ({ visible, handleModalVisible }) => {
       // total_plan: number,
     } as IUser
 
-    dispatch(createUser({ ...userObj }))
+    dispatch(createUser({ ...userObj }, handleModal))
+
   };
 
   const onChange = (date: any, dateString: string) => {
@@ -100,7 +101,6 @@ const CreateUser: React.FC<ICreateUSer> = ({ visible, handleModalVisible }) => {
       footer={null}
       onOk={() => handleModalVisible(false)}
       onCancel={() => handleModal(false)}
-
     >
       <Form
         {...layout}
@@ -173,9 +173,9 @@ const CreateUser: React.FC<ICreateUSer> = ({ visible, handleModalVisible }) => {
           <Form.Item name={['user', 'image']} label="imagen">
             <Input placeholder='' />
           </Form.Item>
-          {/* <Form.Item name={['user', 'admissionDate']} label="Fecha ingreso" rules={[{ required: true }]}>
-            <DatePicker onChange={onChange} />
-          </Form.Item> */}
+          <Form.Item name={['user', 'admissionDate']} label="Fecha ingreso" rules={[{ required: true }]}>
+            <Input type={'date'} />
+          </Form.Item>
           <Form.Item name={['user', 'salaryBase']} label="Sueldo base" rules={[{ required: true }]}>
             <InputNumber placeholder='' />
           </Form.Item>
@@ -196,6 +196,9 @@ const CreateUser: React.FC<ICreateUSer> = ({ visible, handleModalVisible }) => {
         </div>
         <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
           <Button type="primary" htmlType="submit"> Crear </Button>
+        </Form.Item>
+        <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
+          <Button type="default" onClick={() => handleModal(false)} > Cancelar </Button>
         </Form.Item>
       </Form>
     </Modal>
