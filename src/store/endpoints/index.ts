@@ -1,7 +1,10 @@
-import { fetchAllUsers, createUser, ActivateAndDeactivate } from "./users";
+import { fetchAllUsers, createUser, ActivateAndDeactivate, getUser, resetUser, updateUser } from "./users";
 
 export {
   fetchAllUsers,
   createUser,
-  ActivateAndDeactivate
+  ActivateAndDeactivate,
+  getUser,
+  resetUser,
+  updateUser
 }

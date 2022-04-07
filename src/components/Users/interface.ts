@@ -1,4 +1,5 @@
 export interface IUser {
+  id: number,
   id_perfil: number,
   id_sub_plan: number,
   value_sub_plan: number,

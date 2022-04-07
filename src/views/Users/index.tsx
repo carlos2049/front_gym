@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { Table, Space, Button, Switch, Pagination, Popconfirm } from 'antd';
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import { fetchAllUsers } from '../../store/slices/users'
-import { ActivateAndDeactivate } from '../../store/endpoints'
+import { ActivateAndDeactivate, getUser, resetUser } from '../../store/endpoints'
 import { useDispatch, useSelector } from 'react-redux'
 import TableDefault from '../../components/TableDefault';
 import './styles.less'
@@ -21,7 +21,7 @@ const Users = () => {
   const [state, setState] = useState<boolean>(true)
   const [modalVisible, setModalVisible] = useState<boolean>(false)
 
-  const { list } = useSelector((state: any) => state.users)
+  const { list, user } = useSelector((state: any) => state.users)
 
   const limit: number = 5
 
@@ -30,11 +30,20 @@ const Users = () => {
     dispatch(fetchAllUsers(limit, page, state))
   }, [dispatch, page, state])
 
+  useEffect(() => {
+    if (user) {
+      setModalVisible(true)
+    }
+  }, [user])
+
+
   const onChange = (checked: boolean) => {
     setState(checked)
   }
   const handleModalVisible = (visible: boolean) => {
     setModalVisible(visible);
+    dispatch(resetUser())
+
   }
 
   const handlePagination = (page: number, pagesize: number) => {
@@ -45,8 +54,8 @@ const Users = () => {
     dispatch(fetchAllUsers(limit, page, state))
   }
 
-  const getUser = () => {
-
+  const getUserAndActiveModal = (id: number) => {
+    dispatch(getUser(id))
   }
 
   const deactivateUser = (id: number) => {
@@ -85,7 +94,11 @@ const Users = () => {
       key: 'action',
       render: (rowKey: { id: number }) => (
         <Space size="middle">
-          <Button type="link" onClick={() => handleModalVisible(true)} icon={<EditOutlined />} shape="circle" />
+          <Button type="link"
+            onClick={() => getUserAndActiveModal(rowKey.id)}
+            //  handleModalVisible(true)} 
+            icon={<EditOutlined />}
+            shape="circle" />
           <Popconfirm
             title={`¿${state ? 'Desactivar' : 'Activar'} usuario?`}
             onConfirm={() => deactivateUser(rowKey.id)}
@@ -101,13 +114,14 @@ const Users = () => {
       ),
     },
   ]
-
   return (
     <>
+
       <CreateUser
         visible={modalVisible}
         handleModalVisible={handleModalVisible}
         fetchUsuers={fetchUsuers}
+        userObj={user}
       />
       {/* <Button type="primary" onClick={handleModalVisible}>Primary Button</Button> */}
       {/* <button onChange={handleModalVisible}></button> */}

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import moment from 'moment';
 import { Modal, Button, Form, Input, Select, DatePicker, InputNumber, Switch } from 'antd';
 import { fetchAllProfiles } from '../../store/slices/profiles';
-import { createUser } from '../../store/endpoints'
+import { createUser, updateUser } from '../../store/endpoints'
 import { useDispatch, useSelector } from 'react-redux'
 import { IUser, IProfiles, IValues } from './interface';
 const { Option } = Select;
@@ -17,14 +17,16 @@ const layout = {
 interface ICreateUSer {
   visible: boolean,
   handleModalVisible: (checked: boolean) => void,
-  fetchUsuers: () => void
+  fetchUsuers: () => void,
+  userObj: IUser | null
 
 }
 
 
-const CreateUser: React.FC<ICreateUSer> = ({ visible, handleModalVisible, fetchUsuers }) => {
+const CreateUser: React.FC<ICreateUSer> = ({ visible, handleModalVisible, fetchUsuers, userObj }) => {
   const dispatch = useDispatch()
   const [date, setDate] = useState<string>()
+  const [usuario, setUsuario] = useState<IUser | null>()
   const [form] = Form.useForm();
 
   // const state: boolean = true
@@ -34,6 +36,32 @@ const CreateUser: React.FC<ICreateUSer> = ({ visible, handleModalVisible, fetchU
     dispatch(fetchAllProfiles(true))
   }, [dispatch])
 
+  useEffect(() => {
+    // setUsuario(user)
+    if (userObj) {
+      form.setFieldsValue({
+        user: {
+          name: userObj?.names,
+          perfil: userObj?.id_perfil,
+          rut: userObj?.rut,
+          firstLastname: userObj?.first_last_name,
+          secondLastname: userObj?.second_last_name,
+          sex: userObj?.sex,
+          birthdate: userObj?.birth_date,
+          address: userObj?.address,
+          phone: userObj?.phone,
+          email: userObj?.email,
+          profession: userObj?.profession,
+          image: userObj?.image,
+          admissionDate: userObj?.admission_date,
+          salaryBase: userObj?.salary_base,
+          weeklyHours: userObj?.weekly_hours,
+          pass: userObj?.password,
+          observations: userObj.observations
+        }
+      })
+    }
+  }, [userObj])
 
   const handleModal = (visible: boolean) => {
     form.resetFields()
@@ -44,7 +72,7 @@ const CreateUser: React.FC<ICreateUSer> = ({ visible, handleModalVisible, fetchU
 
     const { user } = values
 
-    const userObj: IUser = {
+    const userObjSend: IUser = {
       id_perfil: user.perfil,
       // id_sub_plan: values.sub,
       rut: user.rut,
@@ -68,7 +96,12 @@ const CreateUser: React.FC<ICreateUSer> = ({ visible, handleModalVisible, fetchU
       // total_plan: number,
     } as IUser
 
-    dispatch(createUser({ ...userObj }, handleModal))
+    if (userObj) {
+      // console.log('userObj', userObj)
+      dispatch(updateUser({ ...userObjSend }, userObj.id, handleModal))
+    } else {
+      dispatch(createUser({ ...userObjSend }, handleModal))
+    }
 
   };
 
@@ -90,7 +123,6 @@ const CreateUser: React.FC<ICreateUSer> = ({ visible, handleModalVisible, fetchU
   };
 
   return (<>
-
     <Modal
       width={"70%"}
       title="Crear Usuario"
@@ -100,6 +132,7 @@ const CreateUser: React.FC<ICreateUSer> = ({ visible, handleModalVisible, fetchU
       onOk={() => handleModalVisible(false)}
       onCancel={() => handleModal(false)}
     >
+      {console.log('usuario', userObj)}
       <Form
         {...layout}
         form={form}
@@ -107,11 +140,6 @@ const CreateUser: React.FC<ICreateUSer> = ({ visible, handleModalVisible, fetchU
         onFinish={onFinish}
         validateMessages={validateMessages}
         layout='vertical'
-        initialValues={{
-          user: {
-            name: ''
-          }
-        }}
       >
         <Form.Item
           name={['user', 'perfil']}
