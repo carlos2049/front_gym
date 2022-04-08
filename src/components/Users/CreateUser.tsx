@@ -1,8 +1,7 @@
-import { useEffect, useState } from 'react'
-import moment from 'moment';
-import { Modal, Button, Form, Input, Select, DatePicker, InputNumber, Switch } from 'antd';
-import { fetchAllProfiles } from '../../store/slices/profiles';
-import { createUser, updateUser } from '../../store/endpoints'
+import { useEffect } from 'react'
+import { Modal, Button, Form, Input, Select, InputNumber } from 'antd';
+// import { fetchAllProfiles } from '../../store/slices/profiles';
+import { createUser, updateUser, fetchAllProfiles } from '../../store/endpoints'
 import { useDispatch, useSelector } from 'react-redux'
 import { IUser, IProfiles, IValues } from './interface';
 const { Option } = Select;
@@ -25,8 +24,6 @@ interface ICreateUSer {
 
 const CreateUser: React.FC<ICreateUSer> = ({ visible, handleModalVisible, fetchUsuers, userObj }) => {
   const dispatch = useDispatch()
-  const [date, setDate] = useState<string>()
-  const [usuario, setUsuario] = useState<IUser | null>()
   const [form] = Form.useForm();
 
   // const state: boolean = true
@@ -61,6 +58,7 @@ const CreateUser: React.FC<ICreateUSer> = ({ visible, handleModalVisible, fetchU
         }
       })
     }
+    // eslint-disable-next-line
   }, [userObj])
 
   const handleModal = (visible: boolean) => {
@@ -105,19 +103,18 @@ const CreateUser: React.FC<ICreateUSer> = ({ visible, handleModalVisible, fetchU
 
   };
 
-  const onChange = (date: any, dateString: string) => {
-    // setDate)
-    // const fecha = moment(date).format('YYYY-MM-DD')
-    setDate(date)
-  }
+
 
   const validateMessages = {
+    // eslint-disable-next-line
     required: '${label} es requerido',
     types: {
       email: 'No es un email valido',
+      // eslint-disable-next-line
       number: '${label} ingresado no es un valor numerico',
     },
     number: {
+      // eslint-disable-next-line
       range: '${label} must be between ${min} and ${max}',
     },
   };
