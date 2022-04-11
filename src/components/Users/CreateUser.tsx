@@ -145,7 +145,7 @@ const CreateUser: React.FC<ICreateUSer> = ({ visible, handleModalVisible, fetchU
         >
           <Select placeholder="Seleccionar Perfil">
             {
-              list && list.rows ? list.rows.map((x: IProfiles) => (
+              list ? list.map((x: IProfiles) => (
                 <Option key={x.id} value={x.id}>{x.name}</Option>
               ))
                 : ''

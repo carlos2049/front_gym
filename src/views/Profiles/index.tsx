@@ -63,7 +63,7 @@ const Profiles = () => {
       <Switch defaultChecked onChange={handleSwitch} />
       <Table
         columns={columns}
-        dataSource={list && list.rows ? list.rows : []}
+        dataSource={list ? list : []}
         rowKey='name'
         pagination={false}
       />

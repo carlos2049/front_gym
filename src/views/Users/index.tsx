@@ -114,6 +114,7 @@ const Users = () => {
       ),
     },
   ]
+  console.log('jdsjad', list.rows)
   return (
     <>
 
