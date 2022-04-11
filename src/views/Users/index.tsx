@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Table, Space, Button, Switch, Pagination, Popconfirm } from 'antd';
+import { Space, Button, Popconfirm } from 'antd';
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import { fetchAllUsers } from '../../store/slices/users'
 import { ActivateAndDeactivate, getUser, resetUser } from '../../store/endpoints'
@@ -96,7 +96,6 @@ const Users = () => {
         <Space size="middle">
           <Button type="link"
             onClick={() => getUserAndActiveModal(rowKey.id)}
-            //  handleModalVisible(true)} 
             icon={<EditOutlined />}
             shape="circle" />
           <Popconfirm
@@ -124,8 +123,6 @@ const Users = () => {
         fetchUsuers={fetchUsuers}
         userObj={user}
       />
-      {/* <Button type="primary" onClick={handleModalVisible}>Primary Button</Button> */}
-      {/* <button onChange={handleModalVisible}></button> */}
       <TableDefault
         columns={columns}
         list={list}
