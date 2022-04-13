@@ -20,6 +20,7 @@ export const getProfile = (id: number) => async (distpatch: (arg0: { payload: an
 }
 
 export const resetProfile = () => async (distpatch: (arg0: { payload: any; type: string }) => void) => {
+  console.log('mnaaa')
   distpatch(setProfileObj(null))
 }
 

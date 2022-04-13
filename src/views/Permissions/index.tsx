@@ -6,23 +6,27 @@ import { DeleteOutlined } from '@ant-design/icons';
 
 const Permissions = () => {
   const dispatch = useDispatch()
+  const [page, setPage] = useState<number>(1)
   const [state, setState] = useState<boolean>(true)
-  const { list } = useSelector((state: any) => state.permissions)
-
+  const { listPermissions } = useSelector((state: any) => state.permissions)
+  const limit: number = 8
   useEffect(() => {
-    dispatch(fetchAllPermissions(state))
-  }, [dispatch, state])
+    dispatch(fetchAllPermissions(state, page, limit))
+  }, [dispatch, state, page])
 
   const handleSwitch = (checked: boolean) => {
     setState(checked)
   }
 
   const updateTableProfiles = () => {
-    dispatch(fetchAllPermissions(state))
+    dispatch(fetchAllPermissions(state, page, limit))
   }
 
   const deactivatePermission = (id: number) => {
     dispatch(ActivateAndDeactivatePermission(id, updateTableProfiles))
+  }
+  const onchange = (page: number, pageSize: number): void => {
+    setPage(page)
   }
 
   const columns = [
@@ -58,10 +62,16 @@ const Permissions = () => {
     <>
       <Switch defaultChecked onChange={handleSwitch} />
       <Table
+        size='small'
         columns={columns}
-        dataSource={list ? list : []}
+        dataSource={listPermissions && listPermissions.rows ? listPermissions.rows : []}
         rowKey='name'
-        pagination={false}
+        pagination={{
+          defaultPageSize: limit,
+          defaultCurrent: 1,
+          total: listPermissions?.count,
+          onChange: onchange
+        }}
       />
     </>
   )

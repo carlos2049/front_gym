@@ -12,10 +12,15 @@ const layout = {
 interface IModalProfile {
   visible: boolean,
   handleModalVisible: (visible: boolean) => void,
-  profile: Iprofile | null
+  profile: Iprofile | null,
+  listPermissions: {
+    id: number,
+    state: boolean,
+    name: string
+  }[]
 }
 
-const ModalProfile: React.FC<IModalProfile> = ({ visible, handleModalVisible, profile }) => {
+const ModalProfile: React.FC<IModalProfile> = ({ visible, handleModalVisible, profile, listPermissions }) => {
   const [form] = Form.useForm();
 
   useEffect(() => {
@@ -26,9 +31,13 @@ const ModalProfile: React.FC<IModalProfile> = ({ visible, handleModalVisible, pr
     }
   }, [])
 
-  function onChange(checkedValues: CheckboxValueType[]) {
-    console.log('checked', checkedValues);
+
+
+  const onFinish = (e: Event) => {
+    console.log(e)
   }
+  console.log('listPermiss', profile)
+
 
   return (
     <>
@@ -45,34 +54,30 @@ const ModalProfile: React.FC<IModalProfile> = ({ visible, handleModalVisible, pr
           {...layout}
           form={form}
           name="nest-messages"
-          // onFinish={onFinish}
+          onFinish={onFinish}
           // validateMessages={validateMessages}
           layout='vertical'
         >
 
           <div>
-            <Form.Item name={['profile', 'name']} label="Nombre" rules={[{ required: true }]}>
+            {/* <Form.Item name={['profile', 'name']} label="Nombre" rules={[{ required: true }]}>
               <Input placeholder='' />
+            </Form.Item> */}
+            <Form.Item name="permissions">
+              <Checkbox.Group className="check-group">
+                <Row className="checkbox-row">
+                  {
+                    listPermissions && listPermissions.length > 0 ?
+                      listPermissions.map(x => (
+                        <Col key={x.id}>
+                          <Checkbox value={x.id}>{x.name}</Checkbox>
+                        </Col>
+                      ))
+                      : ''
+                  }
+                </Row>
+              </Checkbox.Group>
             </Form.Item>
-            <Checkbox.Group className="check-group" onChange={onChange}>
-              <Row className="checkbox-row">
-                <Col >
-                  <Checkbox value="A">A</Checkbox>
-                </Col>
-                <Col >
-                  <Checkbox value="B">B</Checkbox>
-                </Col>
-                <Col span={8}>
-                  <Checkbox value="C">C</Checkbox>
-                </Col>
-                <Col span={8}>
-                  <Checkbox value="D">D</Checkbox>
-                </Col>
-                <Col span={8}>
-                  <Checkbox value="E">E</Checkbox>
-                </Col>
-              </Row>
-            </Checkbox.Group>
           </div>
           <div className='footer-button'>
             <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
@@ -84,7 +89,7 @@ const ModalProfile: React.FC<IModalProfile> = ({ visible, handleModalVisible, pr
               </Button>
             </Form.Item>
             <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
-              <Button type="primary" htmlType="submit"> Crear </Button>
+              <Button type="primary" htmlType="submit"> guardar </Button>
             </Form.Item>
           </div>
         </Form>

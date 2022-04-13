@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { ActivateAndDeactivateProfile, fetchAllProfiles, getProfile } from '../../store/endpoints';
+import { ActivateAndDeactivateProfile, fetchAllPermissions, fetchAllProfiles, getProfile, resetProfile } from '../../store/endpoints';
 import { useDispatch, useSelector } from 'react-redux'
 import ModalProfile from '../../components/Profiles/ModalProfile';
 import { Table, Space, Button, Switch, Popconfirm } from 'antd';
@@ -12,7 +12,9 @@ const Profiles = () => {
   const [state, setState] = useState<boolean>(true)
   const [visible, setVisible] = useState<boolean>(false)
   const { list, profile } = useSelector((state: any) => state.profiles)
-
+  const { listPermissions } = useSelector((state: any) => state.permissions)
+  const limit = 'all'
+  const page = 0
   useEffect(() => {
     dispatch(fetchAllProfiles(state))
   }, [dispatch, state])
@@ -22,6 +24,9 @@ const Profiles = () => {
       handleModalVisible(true)
     }
   }, [profile])
+  useEffect(() => {
+    dispatch(fetchAllPermissions(state, page, limit))
+  }, [dispatch, state])
 
   const handleSwitch = (checked: boolean) => {
     setState(checked)
@@ -31,7 +36,11 @@ const Profiles = () => {
     dispatch(fetchAllProfiles(state))
   }
   const handleModalVisible = (visible: boolean) => {
+    console.log('handleModalVisible', visible)
     setVisible(visible)
+    if (!visible) {
+      dispatch(resetProfile())
+    }
   }
 
   const deactivateProfile = (id: number) => {
@@ -81,7 +90,8 @@ const Profiles = () => {
       <ModalProfile
         visible={visible}
         handleModalVisible={handleModalVisible}
-        profile={null}
+        profile={profile}
+        listPermissions={listPermissions.rows}
       />
       <Switch defaultChecked onChange={handleSwitch} />
       <Table

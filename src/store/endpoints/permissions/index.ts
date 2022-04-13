@@ -9,8 +9,8 @@ export const ActivateAndDeactivatePermission = (id: number, callback: () => void
   callback()
 }
 
-export const fetchAllPermissions = (state: boolean) => async (distpatch: (arg0: { payload: any; type: string }) => void) => {
-  const res = await axios.get(`${URL}/permissions?state=${state}`)
+export const fetchAllPermissions = (state: boolean, page: number, limit: number | string) => async (distpatch: (arg0: { payload: any; type: string }) => void) => {
+  const res = await axios.get(`${URL}/permissions?state=${state}&&page=${page}&&limit=${limit}`)
   distpatch(setPermissionList(res.data))
 }
 
