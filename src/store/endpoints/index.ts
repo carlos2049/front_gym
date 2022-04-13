@@ -1,5 +1,5 @@
 import { fetchAllUsers, createUser, ActivateAndDeactivate, getUser, resetUser, updateUser, } from "./users";
-import { ActivateAndDeactivateProfile, fetchAllProfiles, resetProfile } from './profiles'
+import { ActivateAndDeactivateProfile, fetchAllProfiles, resetProfile, getProfile } from './profiles'
 import { fetchAllPermissions, ActivateAndDeactivatePermission } from './permissions'
 
 export {
@@ -13,5 +13,6 @@ export {
   fetchAllProfiles,
   resetProfile,
   fetchAllPermissions,
-  ActivateAndDeactivatePermission
+  ActivateAndDeactivatePermission,
+  getProfile
 }

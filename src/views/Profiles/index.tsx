@@ -1,19 +1,27 @@
 import { useEffect, useState } from 'react'
-import { ActivateAndDeactivateProfile, fetchAllProfiles } from '../../store/endpoints';
+import { ActivateAndDeactivateProfile, fetchAllProfiles, getProfile } from '../../store/endpoints';
 import { useDispatch, useSelector } from 'react-redux'
+import ModalProfile from '../../components/Profiles/ModalProfile';
 import { Table, Space, Button, Switch, Popconfirm } from 'antd';
-import { DeleteOutlined } from '@ant-design/icons';
+import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 
 
 const Profiles = () => {
 
   const dispatch = useDispatch()
   const [state, setState] = useState<boolean>(true)
-  const { list } = useSelector((state: any) => state.profiles)
+  const [visible, setVisible] = useState<boolean>(false)
+  const { list, profile } = useSelector((state: any) => state.profiles)
 
   useEffect(() => {
     dispatch(fetchAllProfiles(state))
   }, [dispatch, state])
+
+  useEffect(() => {
+    if (profile) {
+      handleModalVisible(true)
+    }
+  }, [profile])
 
   const handleSwitch = (checked: boolean) => {
     setState(checked)
@@ -22,9 +30,15 @@ const Profiles = () => {
   const updateTableProfiles = () => {
     dispatch(fetchAllProfiles(state))
   }
+  const handleModalVisible = (visible: boolean) => {
+    setVisible(visible)
+  }
 
   const deactivateProfile = (id: number) => {
     dispatch(ActivateAndDeactivateProfile(id, updateTableProfiles))
+  }
+  const getProfileAndActiveModal = (id: number) => {
+    dispatch(getProfile(id))
   }
 
   const columns = [
@@ -44,6 +58,10 @@ const Profiles = () => {
       key: 'action',
       render: (rowKey: { id: number }) => (
         <Space size="middle">
+          <Button type="link"
+            onClick={() => getProfileAndActiveModal(rowKey.id)}
+            icon={<EditOutlined />}
+            shape="circle" />
           <Popconfirm
             title={`¿${state ? 'Desactivar' : 'Activar'} perfil?`}
             onConfirm={() => deactivateProfile(rowKey.id)}
@@ -60,6 +78,11 @@ const Profiles = () => {
 
   return (
     <>
+      <ModalProfile
+        visible={visible}
+        handleModalVisible={handleModalVisible}
+        profile={null}
+      />
       <Switch defaultChecked onChange={handleSwitch} />
       <Table
         columns={columns}

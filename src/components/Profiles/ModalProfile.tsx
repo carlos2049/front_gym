@@ -1,7 +1,8 @@
 import { useEffect } from "react"
 import { Iprofile } from './interface'
-import { Button, Form, Input, Modal } from "antd"
+import { Button, Checkbox, Col, Form, Input, Modal, Row } from "antd"
 import './styles.less'
+import { CheckboxValueType } from "antd/lib/checkbox/Group";
 
 const layout = {
   labelCol: { span: 8 },
@@ -24,6 +25,10 @@ const ModalProfile: React.FC<IModalProfile> = ({ visible, handleModalVisible, pr
       })
     }
   }, [])
+
+  function onChange(checkedValues: CheckboxValueType[]) {
+    console.log('checked', checkedValues);
+  }
 
   return (
     <>
@@ -49,15 +54,31 @@ const ModalProfile: React.FC<IModalProfile> = ({ visible, handleModalVisible, pr
             <Form.Item name={['profile', 'name']} label="Nombre" rules={[{ required: true }]}>
               <Input placeholder='' />
             </Form.Item>
-            <Form.Item name={['profile', 'state']} label="Estado" rules={[{ required: true }]}>
-              <Input placeholder='' />
-            </Form.Item>
+            <Checkbox.Group className="check-group" onChange={onChange}>
+              <Row className="checkbox-row">
+                <Col >
+                  <Checkbox value="A">A</Checkbox>
+                </Col>
+                <Col >
+                  <Checkbox value="B">B</Checkbox>
+                </Col>
+                <Col span={8}>
+                  <Checkbox value="C">C</Checkbox>
+                </Col>
+                <Col span={8}>
+                  <Checkbox value="D">D</Checkbox>
+                </Col>
+                <Col span={8}>
+                  <Checkbox value="E">E</Checkbox>
+                </Col>
+              </Row>
+            </Checkbox.Group>
           </div>
           <div className='footer-button'>
             <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
               <Button
                 danger
-              // onClick={() => handleModal(false)}
+                onClick={() => handleModalVisible(false)}
               >
                 Cancelar
               </Button>
