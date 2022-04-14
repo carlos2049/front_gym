@@ -1,43 +1,42 @@
 import { useEffect } from "react"
-import { Iprofile } from './interface'
+import { IModalProfile, IPermissions, Iprofile } from './interface'
 import { Button, Checkbox, Col, Form, Input, Modal, Row } from "antd"
+import { useDispatch, useSelector } from 'react-redux'
+import { updateProfilePermissions } from "../../store/endpoints"
 import './styles.less'
-import { CheckboxValueType } from "antd/lib/checkbox/Group";
 
 const layout = {
   labelCol: { span: 8 },
   wrapperCol: { span: 16 },
 };
 
-interface IModalProfile {
-  visible: boolean,
-  handleModalVisible: (visible: boolean) => void,
-  profile: Iprofile | null,
-  listPermissions: {
-    id: number,
-    state: boolean,
-    name: string
-  }[]
-}
+
 
 const ModalProfile: React.FC<IModalProfile> = ({ visible, handleModalVisible, profile, listPermissions }) => {
   const [form] = Form.useForm();
+  const dispatch = useDispatch()
+
 
   useEffect(() => {
     if (profile) {
+      console.log('profile', profile.permissions)
       form.setFieldsValue({
-
+        permissions: profile.permissions
       })
     }
-  }, [])
+  }, [profile])
 
 
-
-  const onFinish = (e: Event) => {
-    console.log(e)
+  const closeModal = () => {
+    handleModalVisible(false)
   }
-  console.log('listPermiss', profile)
 
+  const onFinish = (e: IPermissions) => {
+
+    if (profile) {
+      dispatch(updateProfilePermissions(profile.id, e, closeModal))
+    }
+  }
 
   return (
     <>

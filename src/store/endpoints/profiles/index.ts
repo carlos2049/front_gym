@@ -20,7 +20,16 @@ export const getProfile = (id: number) => async (distpatch: (arg0: { payload: an
 }
 
 export const resetProfile = () => async (distpatch: (arg0: { payload: any; type: string }) => void) => {
-  console.log('mnaaa')
   distpatch(setProfileObj(null))
 }
+
+export const updateProfilePermissions = (id: number, permissions: { permissions: [] }, callback: () => void) => async (distpatch: (arg0: { payload: any; type: string }) => void) => {
+  const res = await axios.put(`${URL}/profiles/${id}/profile`, permissions)
+  callback()
+  console.log('permissions', res)
+
+
+  // distpatch(setProfileObj(null))
+}
+
 

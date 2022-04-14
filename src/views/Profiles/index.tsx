@@ -84,6 +84,7 @@ const Profiles = () => {
     },
   ];
 
+  console.log('listPermissions', profile)
 
   return (
     <>
