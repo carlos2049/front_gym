@@ -1,9 +1,8 @@
-import React from 'react'
+import React, { ChangeEvent } from 'react'
 import { Table, Space, Button, Switch, Pagination, Input, Select } from 'antd';
 import { ITable } from './interface';
 import './styles.less'
 const { Search } = Input;
-const { Option } = Select
 
 const TableDefault: React.FC<ITable> = ({
   columns,
@@ -12,28 +11,34 @@ const TableDefault: React.FC<ITable> = ({
   handlePagination,
   limit,
   rowKey,
-  handleModalVisible
+  handleModalVisible,
+  handleSearchUsers,
+  fetchUsuers
 }) => {
 
-  const onSearch = (value: any) => {
-    console.log(value)
+  const onSearch = (value: string) => {
+    if (value) {
+      handleSearchUsers(value)
+    }
+  }
 
+  const handleVoidString = (event: ChangeEvent<HTMLInputElement>) => {
+    if (!event.target.value) {
+      fetchUsuers()
+    }
   }
 
   return (
     <div className='clase-papa'>
-      <Space direction="horizontal">
-        <Select defaultValue="Option1">
-          <Option value="Option1">Option1</Option>
-          <Option value="Option2">Option2</Option>
-        </Select>
-        <Search placeholder="input search text" onSearch={onSearch} style={{ width: 200 }} />
-      </Space>
       <div className='button-active-switch'>
         <Button type="primary" onClick={() => handleModalVisible(true)}>Crear Usuario</Button>
+        <Space direction="horizontal">
+          <Search placeholder="" onChange={handleVoidString} onSearch={onSearch} style={{ width: 200 }} />
+        </Space>
         <Switch defaultChecked onChange={onChange} />
       </div>
       <Table columns={columns}
+        size="small"
         rowKey={rowKey}
         dataSource={list?.rows || []}
         pagination={{
@@ -41,9 +46,7 @@ const TableDefault: React.FC<ITable> = ({
           defaultPageSize: limit,
           defaultCurrent: 1,
           total: list?.count
-
         }}
-
       />
     </div>)
 }

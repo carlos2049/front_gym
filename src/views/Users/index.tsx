@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { Space, Button, Popconfirm } from 'antd';
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import { fetchAllUsers } from '../../store/slices/users'
-import { ActivateAndDeactivate, getUser, resetUser } from '../../store/endpoints'
+import { ActivateAndDeactivate, getUser, resetUser, searchUsers } from '../../store/endpoints'
 import { useDispatch, useSelector } from 'react-redux'
 import TableDefault from '../../components/TableDefault';
 import './styles.less'
@@ -62,12 +62,20 @@ const Users = () => {
     dispatch(ActivateAndDeactivate(id, fetchUsuers))
   }
 
+  const handleSearchUsers = (value: string) => {
+    dispatch(searchUsers(value))
+  }
+
   const columns = [
     {
       title: 'Nombre',
       dataIndex: 'names',
       key: 'names',
-      // render: (text: string) => <p>{text}</p>,
+    },
+    {
+      title: 'Apellido',
+      dataIndex: 'first_last_name',
+      key: 'first_last_name',
     },
     {
       title: 'Rut',
@@ -93,7 +101,7 @@ const Users = () => {
       title: 'Action',
       key: 'action',
       render: (rowKey: { id: number }) => (
-        <Space size="middle">
+        <Space size="small">
           <Button type="link"
             onClick={() => getUserAndActiveModal(rowKey.id)}
             icon={<EditOutlined />}
@@ -131,6 +139,8 @@ const Users = () => {
         limit={limit}
         rowKey='email'
         handleModalVisible={handleModalVisible}
+        handleSearchUsers={handleSearchUsers}
+        fetchUsuers={fetchUsuers}
       />
     </>
   )

@@ -12,7 +12,6 @@ const layout = {
   wrapperCol: { span: 16 },
 };
 
-
 interface ICreateUSer {
   visible: boolean,
   handleModalVisible: (checked: boolean) => void,
@@ -95,15 +94,11 @@ const CreateUser: React.FC<ICreateUSer> = ({ visible, handleModalVisible, fetchU
     } as IUser
 
     if (userObj) {
-      // console.log('userObj', userObj)
       dispatch(updateUser({ ...userObjSend }, userObj.id, handleModal))
     } else {
       dispatch(createUser({ ...userObjSend }, handleModal))
     }
-
   };
-
-
 
   const validateMessages = {
     // eslint-disable-next-line
@@ -129,7 +124,6 @@ const CreateUser: React.FC<ICreateUSer> = ({ visible, handleModalVisible, fetchU
       onOk={() => handleModalVisible(false)}
       onCancel={() => handleModal(false)}
     >
-      {console.log('usuario', userObj)}
       <Form
         {...layout}
         form={form}
@@ -150,7 +144,6 @@ const CreateUser: React.FC<ICreateUSer> = ({ visible, handleModalVisible, fetchU
               ))
                 : ''
             }
-
           </Select>
         </Form.Item>
         <div>

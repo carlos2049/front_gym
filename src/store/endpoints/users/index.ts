@@ -35,7 +35,6 @@ export const updateUser = (user: object, id: number, callback: any) => async (di
     callback()
     message.success(res.data.message);
   }
-
   // distpatch(setUserList(users.data))
 }
 
@@ -44,13 +43,17 @@ export const updateUser = (user: object, id: number, callback: any) => async (di
 export const createUser = (user: Object, handleModal: any) => async (distpatch: (arg0: { payload: any; type: string }) => void) => {
   const res = await axios.post(`${URL}/users`, user)
   if (res.status === 200 && res.data.success) {
-    // distpatch
-    // handleModal()
     message.success('Usuario creado exitosamente');
   } else {
     message.error(res.data.message);
-
   }
   handleModal()
   // distpatch(setUserList(users.data))
+}
+
+export const searchUsers = (words: string) => async (distpatch: (arg0: { payload: any; type: string }) => void) => {
+  const res = await axios.get(`${URL}/users/search?words=${words}`)
+  if (res.data && res.data.success) {
+    distpatch(setUserList(res.data))
+  }
 }

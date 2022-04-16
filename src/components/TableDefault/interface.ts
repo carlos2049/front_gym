@@ -10,6 +10,8 @@ export interface ITable {
   limit: number,
   rowKey: string,
   handleModalVisible: (visible: boolean) => void,
+  handleSearchUsers: (value: string) => void,
+  fetchUsuers: () => void
   // handleModalVisible: (e: React.MouseEvent<HTMLElement, MouseEvent>) => void,
 
 }

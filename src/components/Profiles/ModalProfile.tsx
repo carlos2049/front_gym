@@ -10,16 +10,12 @@ const layout = {
   wrapperCol: { span: 16 },
 };
 
-
-
 const ModalProfile: React.FC<IModalProfile> = ({ visible, handleModalVisible, profile, listPermissions }) => {
   const [form] = Form.useForm();
   const dispatch = useDispatch()
 
-
   useEffect(() => {
     if (profile) {
-      console.log('profile', profile.permissions)
       form.setFieldsValue({
         permissions: profile.permissions
       })
@@ -32,7 +28,6 @@ const ModalProfile: React.FC<IModalProfile> = ({ visible, handleModalVisible, pr
   }
 
   const onFinish = (e: IPermissions) => {
-
     if (profile) {
       dispatch(updateProfilePermissions(profile.id, e, closeModal))
     }
