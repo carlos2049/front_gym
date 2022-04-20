@@ -31,7 +31,7 @@ const TableDefault: React.FC<ITable> = ({
   return (
     <div className='clase-papa'>
       <div className='button-active-switch'>
-        <Button type="primary" onClick={() => handleModalVisible(true)}>Crear Usuario</Button>
+        <Button type="primary" onClick={() => handleModalVisible(true)}>Nuevo</Button>
         <Space direction="horizontal">
           <Search placeholder="" onChange={handleVoidString} onSearch={onSearch} style={{ width: 200 }} />
         </Space>

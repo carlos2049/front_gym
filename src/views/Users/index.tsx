@@ -5,23 +5,17 @@ import { fetchAllUsers } from '../../store/slices/users'
 import { ActivateAndDeactivate, getUser, resetUser, searchUsers } from '../../store/endpoints'
 import { useDispatch, useSelector } from 'react-redux'
 import TableDefault from '../../components/TableDefault';
+import { IState } from '../../interfaces/state'
 import './styles.less'
 
 import CreateUser from '../../components/Users/CreateUser';
-
-// interface IColumn {
-//   title: string,
-//   dataIndex: string,
-//   key: string,
-
-// }
 
 const Users = () => {
   const [page, setPage] = useState<number>(1)
   const [state, setState] = useState<boolean>(true)
   const [modalVisible, setModalVisible] = useState<boolean>(false)
 
-  const { list, user } = useSelector((state: any) => state.users)
+  const { list, user } = useSelector((state: IState) => state.users)
 
   const limit: number = 5
 

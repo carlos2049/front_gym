@@ -6,7 +6,11 @@ const URL = process.env.REACT_APP_API_BASE_URL
 
 export const fetchAllUsers = (limit = 5, page: number, state: boolean) => async (distpatch: (arg0: { payload: any; type: string }) => void) => {
   const res = await axios.get(`${URL}/users?limit=${limit}&&page=${page}&&state=${state}`)
-  distpatch(setUserList(res.data))
+  if (res.data.success) {
+    distpatch(setUserList(res.data))
+  } else {
+    message.error(res.data.message);
+  }
 }
 
 export const getUser = (id: number) => async (distpatch: (arg0: { payload: any; type: string }) => void) => {
@@ -25,6 +29,11 @@ export const resetUser = () => async (distpatch: (arg0: { payload: any; type: st
 
 export const ActivateAndDeactivate = (id: number, callback: any) => async (distpatch: (arg0: { payload: any; type: string }) => void) => {
   const res = await axios.put(`${URL}/users/${id}`)
+  if (res.data && res.data.success) {
+    message.success(res.data.message);
+  } else {
+    message.error(res.data.message);
+  }
   callback()
   // distpatch(setUserList(users.data))
 }
@@ -32,10 +41,11 @@ export const ActivateAndDeactivate = (id: number, callback: any) => async (distp
 export const updateUser = (user: object, id: number, callback: any) => async (distpatch: (arg0: { payload: any; type: string }) => void) => {
   const res = await axios.put(`${URL}/users/user/${id}`, user)
   if (res.data.success) {
-    callback()
     message.success(res.data.message);
+  } else {
+    message.error(res.data.message);
   }
-  // distpatch(setUserList(users.data))
+  callback()
 }
 
 
