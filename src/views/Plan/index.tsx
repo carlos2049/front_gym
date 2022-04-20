@@ -54,6 +54,7 @@ const Plan: React.FC = () => {
     },
   ]
 
+  // console.log(list.)
 
   return (
     <>

@@ -18,7 +18,7 @@ export const ActivateAndDeactivateProfile = (id: number, callback: () => void) =
 export const fetchAllProfiles = (state: boolean) => async (distpatch: (arg0: { payload: any; type: string }) => void) => {
   const res = await axios.get(`${URL}/profiles?state=${state}`)
   if (res.data && res.data.success) {
-    distpatch(setProfileList(res.data))
+    distpatch(setProfileList(res.data.profiles))
   } else {
     message.error(res.data.message);
   }

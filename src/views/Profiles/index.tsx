@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import ModalProfile from '../../components/Profiles/ModalProfile';
 import { Table, Space, Button, Switch, Popconfirm } from 'antd';
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
+import { IState } from '../../interfaces/state'
 
 
 const Profiles = () => {
@@ -11,8 +12,8 @@ const Profiles = () => {
   const dispatch = useDispatch()
   const [state, setState] = useState<boolean>(true)
   const [visible, setVisible] = useState<boolean>(false)
-  const { list, profile } = useSelector((state: any) => state.profiles)
-  const { listPermissions } = useSelector((state: any) => state.permissions)
+  const { list, profile } = useSelector((state: IState) => state.profiles)
+  const { listPermissions } = useSelector((state: IState) => state.permissions)
   const limit = 'all'
   const page = 0
   useEffect(() => {
