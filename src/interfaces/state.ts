@@ -10,15 +10,15 @@ export interface IState {
     user: IUser
   },
   profiles: {
-    list: any,
-    profile: any
+    list: IProfile[],
+    profile: IProfile
   },
   permissions: {
     listPermissions: any
   }
 }
 
-// lista de los planes
+//  planes
 export interface IPlanList {
   name: string,
   state: boolean
@@ -57,4 +57,11 @@ export interface IUser {
   state: boolean,
   createdAt: string,
   updatedAt: string
+}
+
+interface IProfile {
+  id: number,
+  name: string,
+  state: boolean,
+  permissions: []
 }
