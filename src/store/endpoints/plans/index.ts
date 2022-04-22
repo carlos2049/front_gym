@@ -1,5 +1,5 @@
 import { message } from "antd";
-import { setPlanList } from '../../slices/plans'
+import { setPlanList, setPlan } from '../../slices/plans'
 
 import axios from "axios";
 
@@ -17,4 +17,19 @@ export const fetchAllPlans = (limit = 5, page: number, state: boolean) => async 
   } else {
     message.error(res.data.message);
   }
+}
+
+export const searchPlans = (words: string) => async (distpatch: (arg0: { payload: any; type: string }) => void) => {
+  const res = await axios.get(`${URL}/plans/search?words=${words}`)
+  if (res.data && res.data.success) {
+    const obj = {
+      count: res.data.count,
+      rows: res.data.rows
+    }
+    distpatch(setPlanList(obj))
+  }
+}
+
+export const resetPlan = () => async (distpatch: (arg0: { payload: any; type: string }) => void) => {
+  distpatch(setPlan(null))
 }

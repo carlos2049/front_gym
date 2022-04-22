@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
-import { fetchAllPlans } from '../../store/endpoints';
+import { fetchAllPlans, searchPlans } from '../../store/endpoints';
 import { Button, Popconfirm, Space } from "antd"
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import TableDefault from "../../components/TableDefault"
-import { } from '../../store/endpoints'
 import { useDispatch, useSelector } from 'react-redux'
 import { IState } from '../../interfaces/state'
 
@@ -35,11 +34,11 @@ const Plan: React.FC = () => {
   }
 
   const handleSearchUsers = (value: string) => {
-    // dispatch(searchUsers(value))
+    dispatch(searchPlans(value))
   }
 
   const fetchUsuers = () => {
-    // dispatch(fetchAllUsers(limit, page, state))
+    dispatch(fetchAllPlans(limit, page, state))
   }
   console.log(listPlans)
 
