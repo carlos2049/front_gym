@@ -5,6 +5,7 @@ import { BrowserRouter, Route, Routes as Switch } from 'react-router-dom'
 import Users from '../views/Users';
 import Profiles from '../views/Profiles';
 import Permissions from '../views/Permissions';
+import Plans from '../views/Plan';
 const lazyLoad = (component: any) => lazy(async () => component);
 const DefaultLayout = lazyLoad(import('../layouts/DefaultLayout'))
 const Routes = () => {
@@ -16,6 +17,7 @@ const Routes = () => {
             <Route path="users" element={<Users />} />
             <Route path="permissions" element={<Permissions />} />
             <Route path="profiles" element={<Profiles />} />
+            <Route path="plans" element={<Plans />} />
           </Route>
         </Switch>
       </BrowserRouter>

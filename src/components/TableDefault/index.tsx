@@ -12,19 +12,19 @@ const TableDefault: React.FC<ITable> = ({
   limit,
   rowKey,
   handleModalVisible,
-  handleSearchUsers,
-  fetchUsuers
+  handleSearch,
+  updateStoreList
 }) => {
 
   const onSearch = (value: string) => {
     if (value) {
-      handleSearchUsers(value)
+      handleSearch(value)
     }
   }
 
   const handleVoidString = (event: ChangeEvent<HTMLInputElement>) => {
     if (!event.target.value) {
-      fetchUsuers()
+      updateStoreList()
     }
   }
 

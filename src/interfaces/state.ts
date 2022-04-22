@@ -1,6 +1,9 @@
 export interface IState {
   plans: {
-    list: IPlanList[]
+    listPlans: {
+      rows: IPlanList[],
+      count: number
+    }
   },
   users: {
     list: {
@@ -14,7 +17,10 @@ export interface IState {
     profile: IProfile
   },
   permissions: {
-    listPermissions: any
+    listPermissions: {
+      rows: IPermission[],
+      count: number
+    }
   }
 }
 
@@ -64,4 +70,10 @@ interface IProfile {
   name: string,
   state: boolean,
   permissions: []
+}
+
+interface IPermission {
+  id: number,
+  name: string,
+  state: boolean
 }

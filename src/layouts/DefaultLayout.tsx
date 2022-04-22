@@ -32,9 +32,9 @@ const DefaultLayout = () => {
             <Menu.Item key="subPermissions"><Link to="/permissions">Permisos </Link></Menu.Item>
             <Menu.Item key="subProfiles"><Link to="/profiles">Perfiles </Link></Menu.Item>
           </SubMenu>
-          <Menu.Item key="2" icon={<VideoCameraOutlined />}>
-            nav 2
-          </Menu.Item>
+          <SubMenu key="services" icon={<VideoCameraOutlined />} title="servicios">
+            <Menu.Item key="subPlans"> <Link to="/plans">Planes </Link> </Menu.Item>
+          </SubMenu>
           <Menu.Item key="3" icon={<UploadOutlined />}>
             nav 3
           </Menu.Item>

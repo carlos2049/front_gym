@@ -37,7 +37,6 @@ const Users = () => {
   const handleModalVisible = (visible: boolean) => {
     setModalVisible(visible);
     dispatch(resetUser())
-
   }
 
   const handlePagination = (page: number, pagesize: number) => {
@@ -133,8 +132,8 @@ const Users = () => {
         limit={limit}
         rowKey='email'
         handleModalVisible={handleModalVisible}
-        handleSearchUsers={handleSearchUsers}
-        fetchUsuers={fetchUsuers}
+        handleSearch={handleSearchUsers}
+        updateStoreList={fetchUsuers}
       />
     </>
   )

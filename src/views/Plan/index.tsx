@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { fetchAllPlans } from '../../store/endpoints';
 import { Button, Popconfirm, Space } from "antd"
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import TableDefault from "../../components/TableDefault"
@@ -10,13 +11,37 @@ import { IState } from '../../interfaces/state'
 const Plan: React.FC = () => {
   const [page, setPage] = useState<number>(1)
   const [state, setState] = useState<boolean>(true)
-  const { list } = useSelector((state: IState) => state.plans)
+  const { listPlans } = useSelector((state: IState) => state.plans)
+  const [modalVisible, setModalVisible] = useState<boolean>(false)
 
+
+  const limit: number = 5
   const dispatch = useDispatch()
   useEffect(() => {
-    // dispatch(fetchAllUsers(limit, page, state))
+    dispatch(fetchAllPlans(limit, page, state))
   }, [dispatch, page, state])
 
+  const onChange = (checked: boolean) => {
+    setState(checked)
+  }
+
+  const handlePagination = (page: number, pagesize: number) => {
+    setPage(page)
+  }
+
+  const handleModalVisible = (visible: boolean) => {
+    setModalVisible(visible);
+    // dispatch(resetUser())
+  }
+
+  const handleSearchUsers = (value: string) => {
+    // dispatch(searchUsers(value))
+  }
+
+  const fetchUsuers = () => {
+    // dispatch(fetchAllUsers(limit, page, state))
+  }
+  console.log(listPlans)
 
   const columns = [
     {
@@ -58,17 +83,17 @@ const Plan: React.FC = () => {
 
   return (
     <>
-      {/* <TableDefault
+      <TableDefault
         columns={columns}
-        list={list}
+        list={listPlans}
         onChange={onChange}
         handlePagination={handlePagination}
         limit={limit}
-        rowKey='email'
+        rowKey='name'
         handleModalVisible={handleModalVisible}
-        handleSearchUsers={handleSearchUsers}
-        fetchUsuers={fetchUsuers}
-      /> */}
+        handleSearch={handleSearchUsers}
+        updateStoreList={fetchUsuers}
+      />
     </>
   )
 }
