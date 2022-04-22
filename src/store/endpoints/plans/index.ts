@@ -33,3 +33,13 @@ export const searchPlans = (words: string) => async (distpatch: (arg0: { payload
 export const resetPlan = () => async (distpatch: (arg0: { payload: any; type: string }) => void) => {
   distpatch(setPlan(null))
 }
+
+export const ActivateAndDeactivatePlan = (id: number, callback: () => void) => async (distpatch: (arg0: { payload: any; type: string }) => void) => {
+  const res = await axios.put(`${URL}/plans/plan/${id}`)
+  if (res.data && res.data.success) {
+    message.success(res.data.message);
+  } else {
+    message.error(res.data.message);
+  }
+  callback()
+}

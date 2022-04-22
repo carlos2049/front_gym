@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
-import { fetchAllPlans, searchPlans } from '../../store/endpoints';
+import { fetchAllPlans, searchPlans, resetPlan, ActivateAndDeactivatePlan } from '../../store/endpoints';
 import { Button, Popconfirm, Space } from "antd"
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import TableDefault from "../../components/TableDefault"
+import PlanModal from "../../components/plans";
 import { useDispatch, useSelector } from 'react-redux'
 import { IState } from '../../interfaces/state'
 
@@ -30,16 +31,21 @@ const Plan: React.FC = () => {
 
   const handleModalVisible = (visible: boolean) => {
     setModalVisible(visible);
-    // dispatch(resetUser())
+    dispatch(resetPlan())
   }
 
   const handleSearchUsers = (value: string) => {
     dispatch(searchPlans(value))
   }
 
-  const fetchUsuers = () => {
+  const fetchPlans = () => {
     dispatch(fetchAllPlans(limit, page, state))
   }
+
+  const deactivateUser = (id: number) => {
+    dispatch(ActivateAndDeactivatePlan(id, fetchPlans))
+  }
+
   console.log(listPlans)
 
   const columns = [
@@ -63,8 +69,8 @@ const Plan: React.FC = () => {
             icon={<EditOutlined />}
             shape="circle" />
           <Popconfirm
-            title={`¿${state ? 'Desactivar' : 'Activar'} usuario?`}
-            // onConfirm={() => deactivateUser(rowKey.id)}
+            title={`¿${state ? 'Desactivar' : 'Activar'} plan?`}
+            onConfirm={() => deactivateUser(rowKey.id)}
             onCancel={() => console.log('hola')}
             okText="Yes"
             cancelText="No"
@@ -78,10 +84,14 @@ const Plan: React.FC = () => {
     },
   ]
 
-  // console.log(list.)
+  console.log(modalVisible)
 
   return (
     <>
+      <PlanModal
+        visible={modalVisible}
+        handleModalVisible={handleModalVisible}
+      />
       <TableDefault
         columns={columns}
         list={listPlans}
@@ -91,7 +101,7 @@ const Plan: React.FC = () => {
         rowKey='name'
         handleModalVisible={handleModalVisible}
         handleSearch={handleSearchUsers}
-        updateStoreList={fetchUsuers}
+        updateStoreList={fetchPlans}
       />
     </>
   )
