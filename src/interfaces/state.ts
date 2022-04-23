@@ -1,7 +1,7 @@
 export interface IState {
   plans: {
     listPlans: {
-      rows: IPlanList[],
+      rows: IPlan[],
       count: number
     }
   },
@@ -25,7 +25,7 @@ export interface IState {
 }
 
 //  planes
-export interface IPlanList {
+export interface IPlan {
   name: string,
   state: boolean
 }

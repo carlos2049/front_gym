@@ -91,6 +91,8 @@ const Plan: React.FC = () => {
       <PlanModal
         visible={modalVisible}
         handleModalVisible={handleModalVisible}
+        fetchPlans={fetchPlans}
+        planObj={null}
       />
       <TableDefault
         columns={columns}

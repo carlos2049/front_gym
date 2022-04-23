@@ -45,7 +45,7 @@ export const updateUser = (user: object, id: number, callback: any) => async (di
   } else {
     message.error(res.data.message);
   }
-  callback()
+  callback(false)
 }
 
 
@@ -57,7 +57,7 @@ export const createUser = (user: Object, handleModal: any) => async (distpatch: 
   } else {
     message.error(res.data.message);
   }
-  handleModal()
+  handleModal(false)
   // distpatch(setUserList(users.data))
 }
 

@@ -121,7 +121,7 @@ const CreateUser: React.FC<ICreateUSer> = ({ visible, handleModalVisible, fetchU
       centered
       visible={visible}
       footer={null}
-      onOk={() => handleModalVisible(false)}
+      // onOk={() => handleModalVisible(false)}
       onCancel={() => handleModal(false)}
     >
       <Form
