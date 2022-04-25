@@ -33,7 +33,8 @@ const DefaultLayout = () => {
             <Menu.Item key="subProfiles"><Link to="/profiles">Perfiles </Link></Menu.Item>
           </SubMenu>
           <SubMenu key="services" icon={<VideoCameraOutlined />} title="servicios">
-            <Menu.Item key="subPlans"> <Link to="/plans">Planes </Link> </Menu.Item>
+            <Menu.Item key="Plans"> <Link to="/plans">Planes </Link> </Menu.Item>
+            <Menu.Item key="subPlans"> <Link to="/subplans">Subplanes </Link> </Menu.Item>
           </SubMenu>
           <Menu.Item key="3" icon={<UploadOutlined />}>
             nav 3
