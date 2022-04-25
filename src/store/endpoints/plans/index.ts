@@ -34,6 +34,16 @@ export const resetPlan = () => async (distpatch: (arg0: { payload: any; type: st
   distpatch(setPlan(null))
 }
 
+export const getPlan = (id: number) => async (distpatch: (arg0: { payload: any; type: string }) => void) => {
+  const res = await axios.get(`${URL}/plans/${id}`)
+  if (res.data && res.data.success) {
+    distpatch(setPlan(res.data.plan))
+  } else {
+    message.error(res.data.message);
+
+  }
+}
+
 export const ActivateAndDeactivatePlan = (id: number, callback: () => void) => async (distpatch: (arg0: { payload: any; type: string }) => void) => {
   const res = await axios.put(`${URL}/plans/plan/${id}`)
   if (res.data && res.data.success) {
@@ -53,4 +63,14 @@ export const createPlan = (plan: Object, handleModal: (visible: boolean) => void
   }
   handleModal(false)
   // distpatch(setUserList(users.data))
+}
+
+export const updatePlan = async (plan: object, id: number, callback: any) => {
+  const res = await axios.put(`${URL}/plans/${id}`, plan)
+  if (res.data.success) {
+    message.success(res.data.message);
+  } else {
+    message.error(res.data.message);
+  }
+  callback(false)
 }

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { fetchAllPlans, searchPlans, resetPlan, ActivateAndDeactivatePlan } from '../../store/endpoints';
+import { fetchAllPlans, searchPlans, resetPlan, ActivateAndDeactivatePlan, getPlan } from '../../store/endpoints';
 import { Button, Popconfirm, Space } from "antd"
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import TableDefault from "../../components/TableDefault"
@@ -11,7 +11,7 @@ import { IState } from '../../interfaces/state'
 const Plan: React.FC = () => {
   const [page, setPage] = useState<number>(1)
   const [state, setState] = useState<boolean>(true)
-  const { listPlans } = useSelector((state: IState) => state.plans)
+  const { listPlans, plan } = useSelector((state: IState) => state.plans)
   const [modalVisible, setModalVisible] = useState<boolean>(false)
 
 
@@ -20,6 +20,12 @@ const Plan: React.FC = () => {
   useEffect(() => {
     dispatch(fetchAllPlans(limit, page, state))
   }, [dispatch, page, state])
+
+  useEffect(() => {
+    if (plan) {
+      setModalVisible(true)
+    }
+  }, [plan])
 
   const onChange = (checked: boolean) => {
     setState(checked)
@@ -46,7 +52,9 @@ const Plan: React.FC = () => {
     dispatch(ActivateAndDeactivatePlan(id, fetchPlans))
   }
 
-  console.log(listPlans)
+  const getPlanAndActiveModal = (id: number) => {
+    dispatch(getPlan(id))
+  }
 
   const columns = [
     {
@@ -65,13 +73,13 @@ const Plan: React.FC = () => {
       render: (rowKey: { id: number }) => (
         <Space size="small">
           <Button type="link"
-            // onClick={() => getUserAndActiveModal(rowKey.id)}
+            onClick={() => getPlanAndActiveModal(rowKey.id)}
             icon={<EditOutlined />}
             shape="circle" />
           <Popconfirm
             title={`¿${state ? 'Desactivar' : 'Activar'} plan?`}
             onConfirm={() => deactivateUser(rowKey.id)}
-            onCancel={() => console.log('hola')}
+            // onCancel={() => console.log('hola')}
             okText="Yes"
             cancelText="No"
           >
@@ -84,7 +92,6 @@ const Plan: React.FC = () => {
     },
   ]
 
-  console.log(modalVisible)
 
   return (
     <>
@@ -92,7 +99,7 @@ const Plan: React.FC = () => {
         visible={modalVisible}
         handleModalVisible={handleModalVisible}
         fetchPlans={fetchPlans}
-        planObj={null}
+        planObj={plan}
       />
       <TableDefault
         columns={columns}

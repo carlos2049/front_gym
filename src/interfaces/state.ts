@@ -3,7 +3,8 @@ export interface IState {
     listPlans: {
       rows: IPlan[],
       count: number
-    }
+    },
+    plan: IPlan
   },
   users: {
     list: {
@@ -26,6 +27,7 @@ export interface IState {
 
 //  planes
 export interface IPlan {
+  id: number
   name: string,
   state: boolean
 }

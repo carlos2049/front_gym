@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Modal, Button, Form, Input } from 'antd';
-import { useDispatch, useSelector } from 'react-redux'
-import { createPlan } from '../../store/endpoints'
+import { useDispatch } from 'react-redux'
+import { createPlan, updatePlan } from '../../store/endpoints'
 import { IPlan } from '../../interfaces/state'
 
 const layout = {
@@ -21,6 +21,16 @@ const PlanModal: React.FC<IPLanComponent> = ({ visible, handleModalVisible, fetc
   const dispatch = useDispatch()
   const [form] = Form.useForm();
 
+  useEffect(() => {
+    // setUsuario(user)
+    if (planObj) {
+      form.setFieldsValue({
+        name: planObj?.name
+      })
+    }
+    // eslint-disable-next-line
+  }, [planObj])
+
   const handleModal = (visible: boolean) => {
     form.resetFields()
     handleModalVisible(visible)
@@ -33,11 +43,11 @@ const PlanModal: React.FC<IPLanComponent> = ({ visible, handleModalVisible, fetc
       name
     }
 
-    // if (userObj) {
-    //   dispatch(updateUser({ ...planObjSend }, userObj.id, handleModal))
-    // } else {
-    dispatch(createPlan({ ...planObjSend }, handleModal))
-    // }
+    if (planObj) {
+      updatePlan({ ...planObjSend }, planObj.id, handleModal)
+    } else {
+      dispatch(createPlan({ ...planObjSend }, handleModal))
+    }
 
   };
 
