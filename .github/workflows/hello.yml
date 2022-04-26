@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  hello:word:
+  hello_world:
     runs-on: ubuntu-18.04
     steps:
       - name: eEcho the message
