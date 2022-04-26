@@ -9,6 +9,9 @@ jobs:
   hello_world:
     runs-on: ubuntu-18.04
     steps:
-      - name: eEcho the message
+      - name: Echo the message
         run: |
           echo "hola mundo"
+      - name: Dime la fecha
+        run: date
+      - run: ls-l
