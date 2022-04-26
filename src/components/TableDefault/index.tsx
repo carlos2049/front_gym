@@ -27,7 +27,7 @@ const TableDefault: React.FC<ITable> = ({
       updateStoreList()
     }
   }
-
+  console.log('listaasa', list)
   return (
     <div className='clase-papa'>
       <div className='button-active-switch'>

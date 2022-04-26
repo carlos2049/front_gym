@@ -1,6 +1,7 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import TableDefault from "../../components/TableDefault"
 import { useDispatch, useSelector } from 'react-redux'
+import { fetchAllSubplans } from '../../store/endpoints';
 
 import { Button, Popconfirm, Space } from "antd"
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
@@ -9,9 +10,36 @@ import { IState } from '../../interfaces/state'
 
 const Subplans: React.FC = () => {
 
+  const [page, setPage] = useState<number>(1)
   const [state, setState] = useState<boolean>(true)
-  // const { listPlans, plan } = useSelector((state: IState) => state.plans)
+  const { listSubplans } = useSelector((state: IState) => state.subplans)
+  const dispatch = useDispatch()
 
+  const limit: number = 9
+  useEffect(() => {
+    dispatch(fetchAllSubplans(limit, page, state))
+  }, [dispatch, page, state])
+
+  const onChange = (checked: boolean) => {
+    setState(checked)
+  }
+
+  const handlePagination = (page: number, pagesize: number) => {
+    setPage(page)
+  }
+
+  const handleModalVisible = (visible: boolean) => {
+    // setModalVisible(visible);
+    // dispatch(resetPlan())
+  }
+
+  const handleSearchUsers = (value: string) => {
+    // dispatch(searchPlans(value))
+  }
+
+  const fetchSubplans = () => {
+    dispatch(fetchAllSubplans(limit, page, state))
+  }
 
   const columns = [
     {
@@ -54,17 +82,17 @@ const Subplans: React.FC = () => {
 
   return (
     <>
-      {/* <TableDefault
+      <TableDefault
         columns={columns}
-        list={listPlans}
+        list={listSubplans}
         onChange={onChange}
         handlePagination={handlePagination}
         limit={limit}
         rowKey='name'
         handleModalVisible={handleModalVisible}
         handleSearch={handleSearchUsers}
-        updateStoreList={fetchPlans}
-      /> */}
+        updateStoreList={fetchSubplans}
+      />
     </>
   )
 }
