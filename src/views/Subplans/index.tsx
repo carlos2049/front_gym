@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import TableDefault from "../../components/TableDefault"
 import { useDispatch, useSelector } from 'react-redux'
-import { fetchAllSubplans } from '../../store/endpoints';
+import { fetchAllSubplans, searchsubplans } from '../../store/endpoints';
 
 import { Button, Popconfirm, Space } from "antd"
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
@@ -33,8 +33,8 @@ const Subplans: React.FC = () => {
     // dispatch(resetPlan())
   }
 
-  const handleSearchUsers = (value: string) => {
-    // dispatch(searchPlans(value))
+  const handleSearchSubplans = (value: string) => {
+    dispatch(searchsubplans(value))
   }
 
   const fetchSubplans = () => {
@@ -90,7 +90,7 @@ const Subplans: React.FC = () => {
         limit={limit}
         rowKey='name'
         handleModalVisible={handleModalVisible}
-        handleSearch={handleSearchUsers}
+        handleSearch={handleSearchSubplans}
         updateStoreList={fetchSubplans}
       />
     </>
