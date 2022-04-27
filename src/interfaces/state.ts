@@ -25,9 +25,10 @@ export interface IState {
   },
   subplans: {
     listSubplans: {
-      rows: ISubplans[],
+      rows: ISubplan[],
       count: number
-    }
+    },
+    subplan: ISubplan
   }
 }
 
@@ -86,7 +87,7 @@ interface IPermission {
   state: boolean
 }
 
-export interface ISubplans {
+export interface ISubplan {
   id: number,
   name: string,
   monthly_value: number,

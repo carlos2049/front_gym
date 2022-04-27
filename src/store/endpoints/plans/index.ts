@@ -54,7 +54,7 @@ export const ActivateAndDeactivatePlan = (id: number, callback: () => void) => a
 }
 
 export const createPlan = (plan: Object, handleModal: (visible: boolean) => void) => async (distpatch: (arg0: { payload: any; type: string }) => void) => {
-  const res = await axios.post(`${URL}/plans`, plan)
+  const res = await axios.post(`${URL}/subplans`, plan)
   if (res.status === 200 && res.data.success) {
     message.success('plan creado exitosamente');
   } else {

@@ -38,3 +38,24 @@ export const ActivateAndDeactivateSubplan = (id: number, callback: () => void) =
   }
   callback()
 }
+
+export const getSubplan = (id: number) => async (distpatch: (arg0: { payload: any; type: string }) => void) => {
+  const res = await axios.get(`${URL}/subplans/${id}`)
+  if (res.data && res.data.success) {
+    distpatch(setSubplan(res.data.plan))
+  } else {
+    message.error(res.data.message);
+
+  }
+}
+
+export const createSubplan = (subplan: Object, handleModal: (visible: boolean) => void) => async (distpatch: (arg0: { payload: any; type: string }) => void) => {
+  const res = await axios.post(`${URL}/plans`, subplan)
+  if (res.status === 200 && res.data.success) {
+    message.success('subplan creado exitosamente');
+  } else {
+    message.error(res.data.message);
+  }
+  handleModal(false)
+  // distpatch(setUserList(users.data))
+}

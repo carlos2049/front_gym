@@ -1,7 +1,13 @@
 import { useState, useEffect } from 'react'
 import TableDefault from "../../components/TableDefault"
+import SubplanModal from '../../components/subplans'
 import { useDispatch, useSelector } from 'react-redux'
-import { fetchAllSubplans, searchsubplans, ActivateAndDeactivateSubplan } from '../../store/endpoints';
+import {
+  fetchAllSubplans,
+  searchsubplans,
+  ActivateAndDeactivateSubplan,
+  getSubplan
+} from '../../store/endpoints';
 
 import { Button, Popconfirm, Space } from "antd"
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
@@ -12,7 +18,8 @@ const Subplans: React.FC = () => {
 
   const [page, setPage] = useState<number>(1)
   const [state, setState] = useState<boolean>(true)
-  const { listSubplans } = useSelector((state: IState) => state.subplans)
+  const [modalVisible, setModalVisible] = useState<boolean>(false)
+  const { listSubplans, subplan } = useSelector((state: IState) => state.subplans)
   const dispatch = useDispatch()
 
   const limit: number = 9
@@ -29,7 +36,7 @@ const Subplans: React.FC = () => {
   }
 
   const handleModalVisible = (visible: boolean) => {
-    // setModalVisible(visible);
+    setModalVisible(visible);
     // dispatch(resetPlan())
   }
 
@@ -43,6 +50,10 @@ const Subplans: React.FC = () => {
 
   const deactivateSubplan = (id: number) => {
     dispatch(ActivateAndDeactivateSubplan(id, fetchSubplans))
+  }
+
+  const getSubplanAndActiveModal = (id: number) => {
+    dispatch(getSubplan(id))
   }
 
   const columns = [
@@ -67,7 +78,7 @@ const Subplans: React.FC = () => {
       render: (rowKey: { id: number }) => (
         <Space size="small">
           <Button type="link"
-            // onClick={() => getPlanAndActiveModal(rowKey.id)}
+            onClick={() => getSubplanAndActiveModal(rowKey.id)}
             icon={<EditOutlined />}
             shape="circle" />
           <Popconfirm
@@ -86,6 +97,12 @@ const Subplans: React.FC = () => {
 
   return (
     <>
+      <SubplanModal
+        visible={modalVisible}
+        handleModalVisible={handleModalVisible}
+        fetchSubplans={fetchSubplans}
+        subplanObj={subplan}
+      />
       <TableDefault
         columns={columns}
         list={listSubplans}

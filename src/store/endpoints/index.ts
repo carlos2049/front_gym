@@ -2,7 +2,7 @@ import { fetchAllUsers, createUser, ActivateAndDeactivate, getUser, resetUser, u
 import { ActivateAndDeactivateProfile, fetchAllProfiles, resetProfile, getProfile, updateProfilePermissions } from './profiles'
 import { fetchAllPermissions, ActivateAndDeactivatePermission } from './permissions'
 import { fetchAllPlans, searchPlans, resetPlan, ActivateAndDeactivatePlan, createPlan, getPlan, updatePlan } from './plans'
-import { fetchAllSubplans, searchsubplans, ActivateAndDeactivateSubplan } from './subplans'
+import { fetchAllSubplans, searchsubplans, ActivateAndDeactivateSubplan, getSubplan } from './subplans'
 
 export {
   fetchAllUsers,
@@ -28,5 +28,6 @@ export {
   updatePlan,
   fetchAllSubplans,
   searchsubplans,
-  ActivateAndDeactivateSubplan
+  ActivateAndDeactivateSubplan,
+  getSubplan
 }
