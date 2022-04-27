@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import TableDefault from "../../components/TableDefault"
 import { useDispatch, useSelector } from 'react-redux'
-import { fetchAllSubplans, searchsubplans } from '../../store/endpoints';
+import { fetchAllSubplans, searchsubplans, ActivateAndDeactivateSubplan } from '../../store/endpoints';
 
 import { Button, Popconfirm, Space } from "antd"
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
@@ -41,6 +41,10 @@ const Subplans: React.FC = () => {
     dispatch(fetchAllSubplans(limit, page, state))
   }
 
+  const deactivateSubplan = (id: number) => {
+    dispatch(ActivateAndDeactivateSubplan(id, fetchSubplans))
+  }
+
   const columns = [
     {
       title: 'Nombre',
@@ -68,7 +72,7 @@ const Subplans: React.FC = () => {
             shape="circle" />
           <Popconfirm
             title={`¿${state ? 'Desactivar' : 'Activar'} plan?`}
-            // onConfirm={() => deactivateUser(rowKey.id)}
+            onConfirm={() => deactivateSubplan(rowKey.id)}
             // onCancel={() => console.log('hola')}
             okText="Yes"
             cancelText="No"

@@ -28,3 +28,13 @@ export const searchsubplans = (words: string) => async (distpatch: (arg0: { payl
     distpatch(setSubplanList(obj))
   }
 }
+
+export const ActivateAndDeactivateSubplan = (id: number, callback: () => void) => async (distpatch: (arg0: { payload: any; type: string }) => void) => {
+  const res = await axios.put(`${URL}/subplans/subplan/${id}`)
+  if (res.data && res.data.success) {
+    message.success(res.data.message);
+  } else {
+    message.error(res.data.message);
+  }
+  callback()
+}
