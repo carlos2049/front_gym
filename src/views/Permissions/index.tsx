@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { ActivateAndDeactivatePermission, fetchAllPermissions } from '../../store/endpoints';
 import { useDispatch, useSelector } from 'react-redux'
-import { Table, Space, Button, Switch, Popconfirm } from 'antd';
+import { Table, Space, Button, Switch, Popconfirm, Tag } from 'antd';
 import { DeleteOutlined } from '@ant-design/icons';
 
 const Permissions = () => {
@@ -39,7 +39,15 @@ const Permissions = () => {
       title: 'Estado',
       dataIndex: 'state',
       key: 'state',
-      render: (state: boolean) => <p>{state ? 'activado' : 'desactivado'}</p>
+      render: (state: boolean) => (
+        <Space size={'small'}>
+          {
+            state ?
+              <Tag color="success">activado</Tag> :
+              <Tag color="error">desactivado</Tag>
+          }
+        </Space>
+      )
     },
     {
       title: 'Action',

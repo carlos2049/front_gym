@@ -9,7 +9,7 @@ import {
   getSubplan
 } from '../../store/endpoints';
 
-import { Button, Popconfirm, Space } from "antd"
+import { Button, Popconfirm, Space, Tag } from "antd"
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import { IState } from '../../interfaces/state'
 
@@ -71,6 +71,15 @@ const Subplans: React.FC = () => {
       title: 'Estado',
       dataIndex: 'state',
       key: 'state',
+      render: (state: boolean) => (
+        <Space size={'small'}>
+          {
+            state ?
+              <Tag color="success">activado</Tag> :
+              <Tag color="error">desactivado</Tag>
+          }
+        </Space>
+      )
     },
     {
       title: 'Action',
@@ -82,7 +91,7 @@ const Subplans: React.FC = () => {
             icon={<EditOutlined />}
             shape="circle" />
           <Popconfirm
-            title={`¿${state ? 'Desactivar' : 'Activar'} plan?`}
+            title={`¿${state ? 'Desactivar' : 'Activar'} subplan?`}
             onConfirm={() => deactivateSubplan(rowKey.id)}
             // onCancel={() => console.log('hola')}
             okText="Yes"

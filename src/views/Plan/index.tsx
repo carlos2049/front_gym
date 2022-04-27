@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { fetchAllPlans, searchPlans, resetPlan, ActivateAndDeactivatePlan, getPlan } from '../../store/endpoints';
-import { Button, Popconfirm, Space } from "antd"
+import { Button, Popconfirm, Space, Tag } from "antd"
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import TableDefault from "../../components/TableDefault"
 import PlanModal from "../../components/plans";
@@ -66,6 +66,15 @@ const Plan: React.FC = () => {
       title: 'Estado',
       dataIndex: 'state',
       key: 'state',
+      render: (state: boolean) => (
+        <Space size={'small'}>
+          {
+            state ?
+              <Tag color="success">activado</Tag> :
+              <Tag color="error">desactivado</Tag>
+          }
+        </Space>
+      )
     },
     {
       title: 'Action',

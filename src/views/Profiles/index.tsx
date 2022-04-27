@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { ActivateAndDeactivateProfile, fetchAllPermissions, fetchAllProfiles, getProfile, resetProfile } from '../../store/endpoints';
 import { useDispatch, useSelector } from 'react-redux'
 import ModalProfile from '../../components/Profiles/ModalProfile';
-import { Table, Space, Button, Switch, Popconfirm } from 'antd';
+import { Table, Space, Button, Switch, Popconfirm, Tag } from 'antd';
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import { IState } from '../../interfaces/state'
 
@@ -61,7 +61,15 @@ const Profiles = () => {
       title: 'Estado',
       dataIndex: 'state',
       key: 'state',
-      render: (state: boolean) => <p>{state ? 'activado' : 'desactivado'}</p>
+      render: (state: boolean) => (
+        <Space size={'small'}>
+          {
+            state ?
+              <Tag color="success">activado</Tag> :
+              <Tag color="error">desactivado</Tag>
+          }
+        </Space>
+      )
     },
     {
       title: 'Action',
