@@ -1,5 +1,5 @@
 import React, { ChangeEvent } from 'react'
-import { Table, Space, Button, Switch, Pagination, Input, Select } from 'antd';
+import { Table, Space, Button, Switch, Input } from 'antd';
 import { ITable } from './interface';
 import './styles.less'
 const { Search } = Input;

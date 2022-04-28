@@ -24,6 +24,7 @@ const Profiles = () => {
     if (profile) {
       handleModalVisible(true)
     }
+    // eslint-disable-next-line
   }, [profile])
   useEffect(() => {
     dispatch(fetchAllPermissions(state, page, limit))

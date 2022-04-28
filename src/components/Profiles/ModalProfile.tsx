@@ -1,7 +1,7 @@
 import { useEffect } from "react"
-import { IModalProfile, IPermissions, Iprofile } from './interface'
-import { Button, Checkbox, Col, Form, Input, Modal, Row } from "antd"
-import { useDispatch, useSelector } from 'react-redux'
+import { IModalProfile, IPermissions } from './interface'
+import { Button, Checkbox, Col, Form, Modal, Row } from "antd"
+import { useDispatch } from 'react-redux'
 import { updateProfilePermissions } from "../../store/endpoints"
 import './styles.less'
 
@@ -20,6 +20,7 @@ const ModalProfile: React.FC<IModalProfile> = ({ visible, handleModalVisible, pr
         permissions: profile.permissions
       })
     }
+    // eslint-disable-next-line
   }, [profile])
 
 
