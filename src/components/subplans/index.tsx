@@ -25,10 +25,10 @@ const SubplanModal: React.FC<ISubpLanComponent> = ({ visible, handleModalVisible
   const [form] = Form.useForm();
   const { listPlans } = useSelector((state: IState) => state.plans)
   useEffect(() => {
-    if (subplanObj) {
-      dispatch(fetchAllPlans(10, 1, true))
+    if (visible) {
+      dispatch(fetchAllPlans('all', 1, true))
     }
-  }, [dispatch, subplanObj])
+  }, [dispatch, visible])
 
   useEffect(() => {
     // setUsuario(user)
@@ -72,6 +72,7 @@ const SubplanModal: React.FC<ISubpLanComponent> = ({ visible, handleModalVisible
     },
   };
 
+  console.log('listPlans', listPlans)
 
   return (
     <>

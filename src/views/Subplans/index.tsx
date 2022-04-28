@@ -61,6 +61,7 @@ const Subplans: React.FC = () => {
       title: 'Nombre',
       dataIndex: 'name',
       key: 'name',
+      width: '30%'
     },
     {
       title: 'Valor mensual',
@@ -71,6 +72,7 @@ const Subplans: React.FC = () => {
       title: 'Estado',
       dataIndex: 'state',
       key: 'state',
+      width: '15%',
       render: (state: boolean) => (
         <Space size={'small'}>
           {
@@ -84,6 +86,7 @@ const Subplans: React.FC = () => {
     {
       title: 'Action',
       key: 'action',
+      width: '15%',
       render: (rowKey: { id: number }) => (
         <Space size="small">
           <Button type="link"
