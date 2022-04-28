@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { Modal, Button, Form, Input, InputNumber, Select } from 'antd';
 import { useDispatch, useSelector } from 'react-redux'
 
-import { createPlan, updatePlan, fetchAllPlans } from '../../store/endpoints'
+import { createPlan, createSubplan, fetchAllPlans, updateSubplan } from '../../store/endpoints'
 import { ISubplan, IState } from '../../interfaces/state'
 
 const { Option } = Select;
@@ -31,10 +31,14 @@ const SubplanModal: React.FC<ISubpLanComponent> = ({ visible, handleModalVisible
   }, [dispatch, visible])
 
   useEffect(() => {
-    // setUsuario(user)
     if (subplanObj) {
       form.setFieldsValue({
-        name: subplanObj?.name
+        planId: subplanObj?.plan,
+        name: subplanObj?.name,
+        monthly_value: subplanObj?.monthly_value,
+        quarterly_value: subplanObj?.quarterly_value,
+        semester_value: subplanObj?.semester_value,
+        annual_value: subplanObj?.annual_value,
       })
     }
     // eslint-disable-next-line
@@ -51,9 +55,9 @@ const SubplanModal: React.FC<ISubpLanComponent> = ({ visible, handleModalVisible
 
 
     if (subplanObj) {
-      updatePlan(values, subplanObj.id, handleModal)
+      updateSubplan(values, subplanObj.id, handleModal)
     } else {
-      dispatch(createPlan(values, handleModal))
+      dispatch(createSubplan(values, handleModal))
     }
 
   };
@@ -72,7 +76,7 @@ const SubplanModal: React.FC<ISubpLanComponent> = ({ visible, handleModalVisible
     },
   };
 
-  console.log('listPlans', listPlans)
+  console.log('subplanObj', subplanObj)
 
   return (
     <>

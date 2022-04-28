@@ -27,6 +27,12 @@ const Subplans: React.FC = () => {
     dispatch(fetchAllSubplans(limit, page, state))
   }, [dispatch, page, state])
 
+  useEffect(() => {
+    if (subplan) {
+      setModalVisible(true)
+    }
+  }, [subplan])
+
   const onChange = (checked: boolean) => {
     setState(checked)
   }
@@ -106,6 +112,7 @@ const Subplans: React.FC = () => {
       ),
     },
   ]
+  console.log('subplan', subplan)
 
   return (
     <>

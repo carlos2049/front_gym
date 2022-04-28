@@ -89,6 +89,7 @@ interface IPermission {
 
 export interface ISubplan {
   id: number,
+  plan: number,
   name: string,
   monthly_value: number,
   quarterly_value: number,
