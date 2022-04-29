@@ -19,11 +19,11 @@ jobs:
         run: npm install
       - name: Build
         run: npm run build
-      - name: Set Env Vars on Vercel Project
-        uses: dkershner6/vercel-set-env-action@v1
-        with:
-          token: ${{ secrets.VERCEL_API_KEY }}
-          projectName: front_gym
+      # - name: Set Env Vars on Vercel Project
+      #   uses: dkershner6/vercel-set-env-action@v1
+      #   with:
+      #     token: ${{ secrets.VERCEL_API_KEY }}
+      #     projectName: front_gym
       - name: deploy site to vercel
         uses: amondnet/vercel-action@v20
         with:
