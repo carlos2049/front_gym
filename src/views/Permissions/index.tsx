@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { ActivateAndDeactivatePermission, fetchAllPermissions } from '../../store/endpoints';
+import { ActivateAndDeactivatePermission, fetchAllPermissions } from '../../services/endpoints';
 import { useDispatch, useSelector } from 'react-redux'
 import { Table, Space, Button, Switch, Popconfirm, Tag } from 'antd';
 import { DeleteOutlined } from '@ant-design/icons';

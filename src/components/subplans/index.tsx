@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { Modal, Button, Form, Input, InputNumber, Select } from 'antd';
 import { useDispatch, useSelector } from 'react-redux'
 
-import { createPlan, createSubplan, fetchAllPlans, updateSubplan } from '../../store/endpoints'
+import { createPlan, createSubplan, fetchAllPlans, updateSubplan } from '../../services/endpoints'
 import { ISubplan, IState } from '../../interfaces/state'
 
 const { Option } = Select;

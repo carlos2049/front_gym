@@ -1,5 +1,5 @@
 import { message } from "antd";
-import { setPlanList, setPlan } from '../../slices/plans'
+import { setPlanList, setPlan } from '../../../store/slices/plans'
 
 import axios from "axios";
 

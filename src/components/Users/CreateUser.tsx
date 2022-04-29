@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { Modal, Button, Form, Input, Select, InputNumber } from 'antd';
 // import { fetchAllProfiles } from '../../store/slices/profiles';
-import { createUser, updateUser, fetchAllProfiles } from '../../store/endpoints'
+import { createUser, updateUser, fetchAllProfiles } from '../../services/endpoints'
 import { useDispatch, useSelector } from 'react-redux'
 import { IUser, IProfiles, IValues } from './interface';
 const { Option } = Select;

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { ActivateAndDeactivateProfile, fetchAllPermissions, fetchAllProfiles, getProfile, resetProfile } from '../../store/endpoints';
+import { ActivateAndDeactivateProfile, fetchAllPermissions, fetchAllProfiles, getProfile, resetProfile } from '../../services/endpoints';
 import { useDispatch, useSelector } from 'react-redux'
 import ModalProfile from '../../components/Profiles/ModalProfile';
 import { Table, Space, Button, Switch, Popconfirm, Tag } from 'antd';

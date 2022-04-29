@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Modal, Button, Form, Input } from 'antd';
 import { useDispatch } from 'react-redux'
-import { createPlan, updatePlan } from '../../store/endpoints'
+import { createPlan, updatePlan } from '../../services/endpoints'
 import { IPlan } from '../../interfaces/state'
 
 const layout = {

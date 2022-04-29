@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { fetchAllPlans, searchPlans, resetPlan, ActivateAndDeactivatePlan, getPlan } from '../../store/endpoints';
+import { fetchAllPlans, searchPlans, resetPlan, ActivateAndDeactivatePlan, getPlan } from '../../services/endpoints';
 import { Button, Popconfirm, Space, Tag } from "antd"
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import TableDefault from "../../components/TableDefault"

@@ -1,6 +1,6 @@
 import { message } from 'antd';
 import axios from 'axios'
-import { setProfileList, setProfileObj } from '../../slices/profiles'
+import { setProfileList, setProfileObj } from '../../../store/slices/profiles'
 
 const URL = process.env.REACT_APP_API_BASE_URL
 

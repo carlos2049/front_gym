@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { Space, Button, Popconfirm } from 'antd';
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 // import { fetchAllUsers } from '../../store/slices/users'
-import { ActivateAndDeactivate, getUser, resetUser, searchUsers, fetchAllUsers } from '../../store/endpoints'
+import { ActivateAndDeactivate, getUser, resetUser, searchUsers, fetchAllUsers } from '../../services/endpoints'
 import { useDispatch, useSelector } from 'react-redux'
 import TableDefault from '../../components/TableDefault';
 import { IState } from '../../interfaces/state'

@@ -1,6 +1,6 @@
 import { message } from "antd";
 import axios from "axios";
-import { setSubplanList, setSubplan } from '../../slices/subplans'
+import { setSubplanList, setSubplan } from '../../../store/slices/subplans'
 
 
 const URL = process.env.REACT_APP_API_BASE_URL

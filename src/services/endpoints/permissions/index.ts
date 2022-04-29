@@ -1,6 +1,6 @@
 import { message } from 'antd';
 import axios from 'axios'
-import { setPermissionList } from '../../slices/permissions'
+import { setPermissionList } from '../../../store/slices/permissions'
 
 const URL = process.env.REACT_APP_API_BASE_URL
 

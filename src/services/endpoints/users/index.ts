@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { setUserList, setUser } from '../../slices/users'
+import { setUserList, setUser } from '../../../store/slices/users'
 import { message } from 'antd';
 
 const URL = process.env.REACT_APP_API_BASE_URL

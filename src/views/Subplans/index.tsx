@@ -7,7 +7,7 @@ import {
   searchsubplans,
   ActivateAndDeactivateSubplan,
   getSubplan
-} from '../../store/endpoints';
+} from '../../services/endpoints';
 
 import { Button, Popconfirm, Space, Tag } from "antd"
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';

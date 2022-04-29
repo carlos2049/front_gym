@@ -2,7 +2,7 @@ import { useEffect } from "react"
 import { IModalProfile, IPermissions } from './interface'
 import { Button, Checkbox, Col, Form, Modal, Row } from "antd"
 import { useDispatch } from 'react-redux'
-import { updateProfilePermissions } from "../../store/endpoints"
+import { updateProfilePermissions } from "../../services/endpoints"
 import './styles.less'
 
 const layout = {
