@@ -27,7 +27,7 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "node app.js",
     "dev": "craco start",
     "build": "craco build",
     "test": "craco test",
