@@ -112,7 +112,6 @@ const Subplans: React.FC = () => {
       ),
     },
   ]
-  console.log('subplan', subplan)
 
   return (
     <>

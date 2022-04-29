@@ -102,7 +102,7 @@ const Users = () => {
           <Popconfirm
             title={`¿${state ? 'Desactivar' : 'Activar'} usuario?`}
             onConfirm={() => deactivateUser(rowKey.id)}
-            onCancel={() => console.log('hola')}
+            // onCancel={() => console.log('hola')}
             okText="Yes"
             cancelText="No"
           >
@@ -112,7 +112,7 @@ const Users = () => {
       ),
     },
   ]
-  console.log('jdsjad', list.rows)
+
   return (
     <>
 

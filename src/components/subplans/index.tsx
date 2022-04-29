@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { Modal, Button, Form, Input, InputNumber, Select } from 'antd';
 import { useDispatch, useSelector } from 'react-redux'
 
-import { createPlan, createSubplan, fetchAllPlans, updateSubplan } from '../../services/endpoints'
+import { createSubplan, fetchAllPlans, updateSubplan } from '../../services/endpoints'
 import { ISubplan, IState } from '../../interfaces/state'
 
 const { Option } = Select;
@@ -51,15 +51,11 @@ const SubplanModal: React.FC<ISubpLanComponent> = ({ visible, handleModalVisible
   }
 
   const onFinish = (values: ISubplan) => {
-    console.log('jajajaj', values)
-
-
     if (subplanObj) {
       updateSubplan(values, subplanObj.id, handleModal)
     } else {
       dispatch(createSubplan(values, handleModal))
     }
-
   };
 
   const validateMessages = {
@@ -75,8 +71,6 @@ const SubplanModal: React.FC<ISubpLanComponent> = ({ visible, handleModalVisible
       range: '${label} must be between ${min} and ${max}',
     },
   };
-
-  console.log('subplanObj', subplanObj)
 
   return (
     <>

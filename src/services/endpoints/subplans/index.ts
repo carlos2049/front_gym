@@ -62,7 +62,6 @@ export const createSubplan = (subplan: Object, handleModal: (visible: boolean) =
 
 export const updateSubplan = async (subplan: object, id: number, callback: any) => {
   const res = await axios.put(`${URL}/subplans/${id}`, subplan)
-  console.log('ressdsa', res)
   if (res.data.success) {
     message.success(res.data.message);
   } else {
