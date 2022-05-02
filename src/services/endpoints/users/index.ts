@@ -6,7 +6,7 @@ const URL = process.env.REACT_APP_API_BASE_URL
 
 
 export const fetchAllUsers = (limit = 5, page: number, state: boolean) => async (distpatch: (arg0: { payload: any; type: string }) => void) => {
-  const res = await axios.get(`${URL}/users?limit=${limit}&&page=${page}&&state=${state}`)
+  const res = await axios.get(`https://back-gym-api.herokuapp.com/api/users?limit=${limit}&&page=${page}&&state=${state}`)
   if (res.data.success) {
     distpatch(setUserList(res.data))
   } else {
