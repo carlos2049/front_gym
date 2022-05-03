@@ -27,7 +27,7 @@ const DefaultLayout = () => {
       <Sider trigger={null} collapsible collapsed={collapsed}>
         <div className="logo"> {collapsed ? <h3>ALTUS</h3> : <h3>ALTUS COUCH</h3>} </div>
         <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
-          <SubMenu key="access" icon={<UserOutlined />} title="Acceso">
+          <SubMenu key="access" icon={<UserOutlined />} title="Accesos">
             <Menu.Item key="subUsers"> <Link to="/users">Usuarios </Link> </Menu.Item>
             <Menu.Item key="subPermissions"><Link to="/permissions">Permisos </Link></Menu.Item>
             <Menu.Item key="subProfiles"><Link to="/profiles">Perfiles </Link></Menu.Item>
