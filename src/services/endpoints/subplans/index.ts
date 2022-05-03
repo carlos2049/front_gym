@@ -50,7 +50,7 @@ export const getSubplan = (id: number) => async (distpatch: (arg0: { payload: an
 }
 
 export const createSubplan = (subplan: Object, handleModal: (visible: boolean) => void) => async (distpatch: (arg0: { payload: any; type: string }) => void) => {
-  const res = await axios.post(`${URL}/plans`, subplan)
+  const res = await axios.post(`${URL}/subplans`, subplan)
   if (res.status === 200 && res.data.success) {
     message.success('subplan creado exitosamente');
   } else {
