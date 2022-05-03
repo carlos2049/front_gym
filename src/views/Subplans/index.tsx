@@ -6,7 +6,8 @@ import {
   fetchAllSubplans,
   searchsubplans,
   ActivateAndDeactivateSubplan,
-  getSubplan
+  getSubplan,
+  resetSubplan
 } from '../../services/endpoints';
 
 import { Button, Popconfirm, Space, Tag } from "antd"
@@ -43,7 +44,7 @@ const Subplans: React.FC = () => {
 
   const handleModalVisible = (visible: boolean) => {
     setModalVisible(visible);
-    // dispatch(resetPlan())
+    dispatch(resetSubplan())
   }
 
   const handleSearchSubplans = (value: string) => {

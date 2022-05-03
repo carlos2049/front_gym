@@ -69,3 +69,7 @@ export const updateSubplan = async (subplan: object, id: number, callback: any) 
   }
   callback(false)
 }
+
+export const resetSubplan = () => async (distpatch: (arg0: { payload: any; type: string }) => void) => {
+  distpatch(setSubplan(null))
+}

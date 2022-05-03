@@ -15,7 +15,7 @@ const Plan: React.FC = () => {
   const [modalVisible, setModalVisible] = useState<boolean>(false)
 
 
-  const limit: number = 5
+  const limit: number = 10
   const dispatch = useDispatch()
   useEffect(() => {
     dispatch(fetchAllPlans(limit, page, state))
