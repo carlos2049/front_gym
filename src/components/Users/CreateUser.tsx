@@ -26,6 +26,7 @@ const CreateUser: React.FC<ICreateUSer> = ({ visible, handleModalVisible, fetchU
   const [form] = Form.useForm();
 
   // const state: boolean = true
+  console.log('userObj', userObj)
 
   const { list } = useSelector((state: any) => state.profiles)
   useEffect(() => {
@@ -114,7 +115,6 @@ const CreateUser: React.FC<ICreateUSer> = ({ visible, handleModalVisible, fetchU
     },
   };
 
-
   return (<>
     <Modal
       width={"70%"}
@@ -193,7 +193,7 @@ const CreateUser: React.FC<ICreateUSer> = ({ visible, handleModalVisible, fetchU
           <Form.Item name={['user', 'admissionDate']} label="Fecha ingreso" rules={[{ required: true }]}>
             <Input type={'date'} />
           </Form.Item>
-          <Form.Item name={['user', 'salaryBase']} label="Sueldo base" rules={[{ required: true }]}>
+          <Form.Item name={['user', 'salaryBase']} label="Sueldo base" >
             <InputNumber placeholder='' />
           </Form.Item>
           <Form.Item name={['user', 'weeklyHours']} label="Horas semanales" rules={[{ required: true }]}>

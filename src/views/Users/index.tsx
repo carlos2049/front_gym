@@ -116,6 +116,8 @@ const Users = () => {
     },
   ]
 
+  console.log('user', user)
+
   return (
     <>
 
