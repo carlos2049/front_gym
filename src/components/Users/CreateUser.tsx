@@ -1,9 +1,10 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { Modal, Button, Form, Input, Select, InputNumber } from 'antd';
 // import { fetchAllProfiles } from '../../store/slices/profiles';
-import { createUser, updateUser, fetchAllProfiles } from '../../services/endpoints'
+import { createUser, updateUser, fetchAllProfiles, fetchAllSubplans } from '../../services/endpoints'
 import { useDispatch, useSelector } from 'react-redux'
 import { IUser, IProfiles, IValues } from './interface';
+import { IState, ISubplan } from '../../interfaces/state';
 const { Option } = Select;
 const { TextArea } = Input
 
@@ -23,15 +24,18 @@ interface ICreateUSer {
 
 const CreateUser: React.FC<ICreateUSer> = ({ visible, handleModalVisible, fetchUsuers, userObj }) => {
   const dispatch = useDispatch()
+  const { listSubplans } = useSelector((state: IState) => state.subplans)
+  const { list } = useSelector((state: any) => state.profiles)
   const [form] = Form.useForm();
+  const [profileSelected, setProfileSelected] = useState<number>(0)
 
   // const state: boolean = true
-  console.log('userObj', userObj)
 
-  const { list } = useSelector((state: any) => state.profiles)
   useEffect(() => {
     dispatch(fetchAllProfiles(true))
+    dispatch(fetchAllSubplans('all', 1, true))
   }, [dispatch])
+
 
   useEffect(() => {
     // setUsuario(user)
@@ -101,6 +105,10 @@ const CreateUser: React.FC<ICreateUSer> = ({ visible, handleModalVisible, fetchU
     }
   };
 
+  const handleSelectProfile = (e: Event) => {
+    setProfileSelected(Number(e))
+  }
+
   const validateMessages = {
     // eslint-disable-next-line
     required: '${label} es requerido',
@@ -115,6 +123,7 @@ const CreateUser: React.FC<ICreateUSer> = ({ visible, handleModalVisible, fetchU
     },
   };
 
+  console.log('listSubplans', listSubplans)
   return (<>
     <Modal
       width={"70%"}
@@ -138,7 +147,7 @@ const CreateUser: React.FC<ICreateUSer> = ({ visible, handleModalVisible, fetchU
           label="Tipo Perfil"
           rules={[{ required: true, message: 'Seleccione Perfil' }]}
         >
-          <Select placeholder="Seleccionar Perfil">
+          <Select placeholder="Seleccionar Perfil" onSelect={handleSelectProfile}>
             {
               list ? list.map((x: IProfiles) => (
                 <Option key={x.id} value={x.id}>{x.name}</Option>
@@ -200,6 +209,27 @@ const CreateUser: React.FC<ICreateUSer> = ({ visible, handleModalVisible, fetchU
           {/* <Form.Item name={['user', 'pass']} label="Clave" rules={[{ required: true, }]}>
             <Input.Password />
           </Form.Item> */}
+
+          {
+            profileSelected === 2
+              ?
+              <Form.Item
+                name={['user', 'subplan']}
+                label="Tipo subplan"
+                rules={[{ required: true, message: 'Seleccione subplan' }]}
+              >
+                <Select placeholder="Seleccionar subplan">
+                  {
+                    listSubplans ? listSubplans.rows.map((x: ISubplan) => (
+                      <Option key={x.id} value={x.id}>{x.name}</Option>
+                    ))
+                      : ''
+                  }
+                </Select>
+              </Form.Item>
+              : ''
+
+          }
 
           <Form.Item name={['user', 'observations']} label="Observaciones" rules={[{ type: 'string' }]}>
             <TextArea rows={4} />

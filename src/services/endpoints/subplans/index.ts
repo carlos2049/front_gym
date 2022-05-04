@@ -5,7 +5,7 @@ import { setSubplanList, setSubplan } from '../../../store/slices/subplans'
 
 const URL = process.env.REACT_APP_API_BASE_URL
 
-export const fetchAllSubplans = (limit = 5, page: number, state: boolean) => async (distpatch: (arg0: { payload: any; type: string }) => void) => {
+export const fetchAllSubplans = (limit: number | string = 5, page: number, state: boolean) => async (distpatch: (arg0: { payload: any; type: string }) => void) => {
   const res = await axios.get(`${URL}/subplans?limit=${limit}&&page=${page}&&state=${state}`)
   if (res.data.success) {
     const obj = {
