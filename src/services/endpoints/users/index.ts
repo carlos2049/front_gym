@@ -52,6 +52,7 @@ export const updateUser = (user: object, id: number, callback: any) => async (di
 
 
 export const createUser = (user: Object, handleModal: any) => async (distpatch: (arg0: { payload: any; type: string }) => void) => {
+  console.log('hhjahsa', user)
   const res = await axios.post(`${URL}/users`, user)
   if (res.status === 200 && res.data.success) {
     message.success('Usuario creado exitosamente');

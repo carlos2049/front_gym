@@ -114,6 +114,7 @@ const CreateUser: React.FC<ICreateUSer> = ({ visible, handleModalVisible, fetchU
     },
   };
 
+
   return (<>
     <Modal
       width={"70%"}

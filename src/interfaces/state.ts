@@ -41,7 +41,10 @@ export interface IPlan {
 
 export interface IUser {
   id: number,
-  id_perfil: number,
+  profile: {
+    id: number,
+    name: string
+  },
   id_sub_plan: number,
   value_sub_plan: number,
   amount_months: number,

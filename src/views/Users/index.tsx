@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Space, Button, Popconfirm } from 'antd';
+import { Space, Button, Popconfirm, Tag } from 'antd';
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 // import { fetchAllUsers } from '../../store/slices/users'
 import { ActivateAndDeactivate, getUser, resetUser, searchUsers, fetchAllUsers } from '../../services/endpoints'
@@ -87,8 +87,11 @@ const Users = () => {
     },
     {
       title: 'Perfil',
-      dataIndex: 'id_perfil',
-      key: 'id_perfil',
+      dataIndex: 'profile',
+      key: 'profile',
+      render: (rowKey: { name: string }) => (
+        <Tag color="success">{rowKey.name}</Tag>
+      )
     },
     {
       title: 'Action',
@@ -120,7 +123,7 @@ const Users = () => {
         visible={modalVisible}
         handleModalVisible={handleModalVisible}
         fetchUsuers={fetchUsuers}
-        userObj={user}
+        userObj={user ? { ...user, id_perfil: user?.profile.id } : null}
       />
       <TableDefault
         columns={columns}
