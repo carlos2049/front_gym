@@ -90,7 +90,7 @@ const Users = () => {
       dataIndex: 'profile',
       key: 'profile',
       render: (rowKey: { name: string }) => (
-        <Tag color="success">{rowKey.name}</Tag>
+        <Tag style={{ width: '100%', textAlign: 'center' }} color="success">{rowKey.name}</Tag>
       )
     },
     {

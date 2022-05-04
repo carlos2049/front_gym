@@ -167,12 +167,6 @@ const CreateUser: React.FC<ICreateUSer> = ({ visible, handleModalVisible, fetchU
             </Select>
           </Form.Item>
           <Form.Item name={['user', 'birthdate']} label="Fecha Nacimiento" rules={[{ required: true }]}>
-            {/* <DatePicker
-              format={'YYYY-MM-DD'}
-              onPanelChange={(date) => alert(date)}
-              onChange={onChange}
-              value={moment(date)}
-            /> */}
             <Input type={'date'} />
           </Form.Item>
           <Form.Item name={['user', 'address']} label="Direccion" >
@@ -202,9 +196,11 @@ const CreateUser: React.FC<ICreateUSer> = ({ visible, handleModalVisible, fetchU
           {/* <Form.Item name={['user', 'user']} label="Usuario" rules={[{ required: true }]}>
             <Input placeholder='Ejemplo: Juan123' />
           </Form.Item> */}
-          <Form.Item name={['user', 'pass']} label="Clave" rules={[{ required: true, }]}>
+
+          {/* <Form.Item name={['user', 'pass']} label="Clave" rules={[{ required: true, }]}>
             <Input.Password />
-          </Form.Item>
+          </Form.Item> */}
+
           <Form.Item name={['user', 'observations']} label="Observaciones" rules={[{ type: 'string' }]}>
             <TextArea rows={4} />
           </Form.Item>
