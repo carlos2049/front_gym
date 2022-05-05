@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { Form, Select, Table, Input, Radio, Space } from "antd"
+import { Form, Select, Table, Input, Radio, Space, InputNumber, Row, Col } from "antd"
 import { ISubplan } from "../../../interfaces/state"
 import { ISectionSubplan } from "./interface"
 import './styles.less'
@@ -50,19 +50,72 @@ const SectionSubplan: React.FC<ISectionSubplan<ISubplan>> = ({ listSubplans }) =
           <div className="text_value">{selectSubplan?.annual_value} </div>
         </div>
       </div>
-      <Form.Item>
-        <Radio.Group
-        // onChange={this.onChange} 
-        // value={value}
-        >
-          <Space direction="vertical">
-            <Radio value={1}>Option A</Radio>
-            <Radio value={2}>Option B</Radio>
-            <Radio value={3}>Option C</Radio>
-          </Space>
-        </Radio.Group>
+      <Row gutter={[16, 16]}>
+        <Col span={6}>
+          <Form.Item>
+            <Radio.Group
+            // onChange={this.onChange} 
+            // value={value}
+            >
+              <Space direction="vertical">
+                <Radio value={1}>Valor mensual</Radio>
+                <Radio value={2}>Valor trimestral</Radio>
+                <Radio value={3}>Valor semestral</Radio>
+                <Radio value={4}>Valor anual</Radio>
+              </Space>
+            </Radio.Group>
 
-      </Form.Item>
+          </Form.Item>
+        </Col>
+        <Col span={8}>
+          <Form.Item name={['user', 'amount_months']} label="cantidad de meses">
+            <InputNumber placeholder='' />
+          </Form.Item>
+          <Form.Item name={['user', 'end_date_plan']} label="Termino del plan" rules={[{ required: true }]}>
+            <Input type={'date'} />
+          </Form.Item>
+        </Col>
+        <Col span={8}>
+          <Form.Item style={{ width: '100%' }} name={['user', 'registration_value']} label="valor matricula">
+            <InputNumber placeholder='' />
+          </Form.Item>
+          <Form.Item style={{ width: '100%' }} name={['user', 'discount']} label="descuento en $">
+            <InputNumber placeholder='' />
+          </Form.Item>
+          <Form.Item style={{ width: '100%' }} name={['user', 'value_cancel']} label="Valor a cancelar">
+            <InputNumber disabled placeholder='' />
+          </Form.Item>
+        </Col>
+      </Row>
+      <Row gutter={[16, 16]}>
+        <Col span={12}>
+          <Form.Item name={['user', 'physical_activity']} label="Actividad fisica" >
+            <Input placeholder='' />
+          </Form.Item>
+          <Form.Item name={['user', 'illnesses_and_injuries']} label="Enfermedades y lesiones" >
+            <Input placeholder='' />
+          </Form.Item>
+          <Form.Item name={['user', 'emergency_contact']} label="Nombre contacto de emergencia" >
+            <Input placeholder='' />
+          </Form.Item>
+        </Col>
+        <Col span={12}>
+          <Form.Item name={['user', 'desired_goal']} label="Objetivo deseado" >
+            <Input placeholder='' />
+          </Form.Item>
+          <Form.Item name={['user', 'allergies']} label="Alergias" >
+            <Input placeholder='' />
+          </Form.Item>
+          <Form.Item name={['user', 'emergency_phone']} label="Contacto de emergencia" >
+            <Input placeholder='' />
+          </Form.Item>
+        </Col>
+
+      </Row>
+
+
+
+
     </>)
 }
 export default SectionSubplan
