@@ -62,6 +62,8 @@ const CreateUser: React.FC<ICreateUSer> = ({ visible, handleModalVisible, fetchU
           observations: userObj.observations
         }
       })
+      setProfileSelected(Number(userObj.id_perfil))
+
     }
     // eslint-disable-next-line
   }, [userObj])
@@ -212,7 +214,6 @@ const CreateUser: React.FC<ICreateUSer> = ({ visible, handleModalVisible, fetchU
 
           {
             profileSelected === 2 ? <SectionSubplan listSubplans={listSubplans.rows} /> : ''
-
           }
 
           <Form.Item name={['user', 'observations']} label="Observaciones" rules={[{ type: 'string' }]}>
