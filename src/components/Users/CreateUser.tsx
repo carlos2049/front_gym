@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import SectionSubplan from './SectionSubplan';
 import { Modal, Button, Form, Input, Select, InputNumber } from 'antd';
 // import { fetchAllProfiles } from '../../store/slices/profiles';
 import { createUser, updateUser, fetchAllProfiles, fetchAllSubplans } from '../../services/endpoints'
@@ -73,7 +74,6 @@ const CreateUser: React.FC<ICreateUSer> = ({ visible, handleModalVisible, fetchU
   const onFinish = (values: IValues) => {
 
     const { user } = values
-
     const userObjSend: IUser = {
       id_perfil: user.perfil,
       // id_sub_plan: values.sub,
@@ -211,23 +211,7 @@ const CreateUser: React.FC<ICreateUSer> = ({ visible, handleModalVisible, fetchU
           </Form.Item> */}
 
           {
-            profileSelected === 2
-              ?
-              <Form.Item
-                name={['user', 'subplan']}
-                label="Tipo subplan"
-                rules={[{ required: true, message: 'Seleccione subplan' }]}
-              >
-                <Select placeholder="Seleccionar subplan">
-                  {
-                    listSubplans ? listSubplans.rows.map((x: ISubplan) => (
-                      <Option key={x.id} value={x.id}>{x.name}</Option>
-                    ))
-                      : ''
-                  }
-                </Select>
-              </Form.Item>
-              : ''
+            profileSelected === 2 ? <SectionSubplan listSubplans={listSubplans.rows} /> : ''
 
           }
 
