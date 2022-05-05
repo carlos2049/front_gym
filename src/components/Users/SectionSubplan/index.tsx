@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { Form, Select, Table, Input } from "antd"
+import { Form, Select, Table, Input, Radio, Space } from "antd"
 import { ISubplan } from "../../../interfaces/state"
 import { ISectionSubplan } from "./interface"
 import './styles.less'
@@ -34,22 +34,35 @@ const SectionSubplan: React.FC<ISectionSubplan<ISubplan>> = ({ listSubplans }) =
       </Form.Item>
       <div className="div_father">
         <div className="div_children">
-          <div className="text">valor mensual</div>
-          <Input disabled value={selectSubplan?.monthly_value} />
+          <div className="text_title">Valor mensual</div>
+          <div className="text_value">{selectSubplan ? selectSubplan.monthly_value : ''} </div>
         </div>
         <div className="div_children">
-          <div className="text">valor trimestral</div>
-          <Input disabled value={selectSubplan?.quarterly_value} />
+          <div className="text_title">Valor trimestral</div>
+          <div className="text_value" > {selectSubplan?.quarterly_value}</div>
         </div>
         <div className="div_children">
-          <div className="text">valor semestral</div>
-          <Input disabled value={selectSubplan?.semester_value} />
+          <div className="text_title">Valor semestral</div>
+          <div className="text_value">{selectSubplan?.semester_value} </div>
         </div>
         <div className="div_children">
-          <div className="text">valor anual</div>
-          <Input disabled value={selectSubplan?.annual_value} />
+          <div className="text_title">Valor anual</div>
+          <div className="text_value">{selectSubplan?.annual_value} </div>
         </div>
       </div>
+      <Form.Item>
+        <Radio.Group
+        // onChange={this.onChange} 
+        // value={value}
+        >
+          <Space direction="vertical">
+            <Radio value={1}>Option A</Radio>
+            <Radio value={2}>Option B</Radio>
+            <Radio value={3}>Option C</Radio>
+          </Space>
+        </Radio.Group>
+
+      </Form.Item>
     </>)
 }
 export default SectionSubplan
