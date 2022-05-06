@@ -17,7 +17,7 @@ const Users = () => {
 
   const { list, user } = useSelector((state: IState) => state.users)
 
-  const limit: number = 5
+  const limit: number = 10
 
   const dispatch = useDispatch()
   useEffect(() => {

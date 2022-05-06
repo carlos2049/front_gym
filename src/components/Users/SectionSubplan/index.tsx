@@ -4,7 +4,6 @@ import { ISubplan } from "../../../interfaces/state"
 import { ISectionSubplan } from "./interface"
 import './styles.less'
 import { valueType } from "antd/lib/statistic/utils"
-import userEvent from "@testing-library/user-event"
 
 const { Option } = Select
 
@@ -12,52 +11,53 @@ interface IRES {
   registrationValue: number,
   discount: number,
   selectSub: number,
-  total: number
+  total: number,
+  months: number,
+  disabledInput: boolean
 }
 
-const SectionSubplan: React.FC<ISectionSubplan<ISubplan>> = ({ listSubplans, form }) => {
+const SectionSubplan: React.FC<ISectionSubplan<ISubplan>> = ({ listSubplans, form, subplan }) => {
 
   const [selectSubplan, setSelectSubplan] = useState<ISubplan>()
-  const [registrationValue, setRegistrationValue] = useState<number>(0)
-  const [subplan, setSubplan] = useState<number | null>(null)
+  // const [subplan, setSubplan] = useState<number | null>(null)
   const [total, setTotal] = useState<number>(0)
-  const [selectSub, setSelectSub] = useState<number>(0)
 
   const [nuevo, setNuevo] = useState<IRES>({
     registrationValue: 0,
     discount: 0,
     selectSub: 0,
-    total: 0
+    total: 0,
+    months: 0,
+    disabledInput: true
   })
 
   useEffect(() => {
-    const { user } = form.getFieldValue()
-    console.log('useeffet', user)
-    setSubplan(user.subplan)
-  }, [])
+    const subplanFinded = listSubplans.find(x => x.id === subplan)
+    setSelectSubplan(subplanFinded)
+  }, [subplan])
 
   useEffect(() => {
-    const result = (nuevo.selectSub + nuevo.registrationValue) - nuevo.discount
+    const result = ((nuevo.months * nuevo.selectSub) + nuevo.registrationValue) - nuevo.discount
     setTotal(result)
   }, [nuevo])
 
   useEffect(() => {
-    // setUsuario(user)
-    form.setFieldsValue({
-      user: {
-        value_cancel: total,
-        // subplan: 3
-      }
-    })
+    if (total >= 0 || nuevo.months) {
+      form.setFieldsValue({
+        user: {
+          total_plan: total,
+          amount_months: nuevo.months ? nuevo.months : null,
+        }
+      })
+    }
     // eslint-disable-next-line
-  }, [total])
+  }, [total, nuevo.months])
 
 
 
   const handleSelectSubplan = (e: number) => {
     const subplanFinded = listSubplans.find(x => x.id === e)
     setSelectSubplan(subplanFinded)
-    // console.log('sahdkjsakjd', subplanFinded)
   }
 
   const handleRegistrationValue = (value: valueType) => {
@@ -65,7 +65,7 @@ const SectionSubplan: React.FC<ISectionSubplan<ISubplan>> = ({ listSubplans, for
     // const result = value
     // form.setFieldsValue({
     //   user: {
-    //     value_cancel: 1000,
+    //     total_plan: 1000,
     //   }
     // })
   }
@@ -79,24 +79,26 @@ const SectionSubplan: React.FC<ISectionSubplan<ISubplan>> = ({ listSubplans, for
   const handleSelectRadio = (value: RadioChangeEvent) => {
     if (selectSubplan) {
       if (value.target.value === 1) {
-        setNuevo({ ...nuevo, selectSub: selectSubplan.monthly_value })
-
-        // setSelectSub(selectSubplan.monthly_value)
+        setNuevo({ ...nuevo, selectSub: selectSubplan.monthly_value, disabledInput: false })
       }
       if (value.target.value === 2) {
-        setNuevo({ ...nuevo, selectSub: selectSubplan.quarterly_value })
+        setNuevo({ ...nuevo, selectSub: selectSubplan.quarterly_value, months: 3, disabledInput: true })
       }
       if (value.target.value === 3) {
-        setNuevo({ ...nuevo, selectSub: selectSubplan.semester_value })
+        setNuevo({ ...nuevo, selectSub: selectSubplan.semester_value, months: 6, disabledInput: true })
       }
       if (value.target.value === 4) {
-        setNuevo({ ...nuevo, selectSub: selectSubplan.annual_value })
+        setNuevo({ ...nuevo, selectSub: selectSubplan.annual_value, months: 12, disabledInput: true })
 
       }
     }
   }
 
-  console.log('kasjdkjsajkd', subplan)
+  const handleAmountMonths = (value: valueType) => {
+    setNuevo({ ...nuevo, months: Number(value) })
+  }
+
+  console.log('kasjdkjsajkd', nuevo)
   return (
     <>
       <Form.Item
@@ -137,7 +139,7 @@ const SectionSubplan: React.FC<ISectionSubplan<ISubplan>> = ({ listSubplans, for
             <Radio.Group
               onChange={handleSelectRadio}
               // value={2}
-              disabled={subplan ? false : true}
+              disabled={selectSubplan?.id ? false : true}
             >
               <Space direction="vertical">
                 <Radio value={1}>Valor mensual</Radio>
@@ -150,7 +152,7 @@ const SectionSubplan: React.FC<ISectionSubplan<ISubplan>> = ({ listSubplans, for
         </Col>
         <Col span={8}>
           <Form.Item name={['user', 'amount_months']} label="cantidad de meses">
-            <InputNumber placeholder='' />
+            <InputNumber disabled={nuevo.disabledInput} placeholder='' onChange={handleAmountMonths} />
           </Form.Item>
           <Form.Item name={['user', 'end_date_plan']} label="Termino del plan" rules={[{ required: true }]}>
             <Input type={'date'} />
@@ -163,7 +165,7 @@ const SectionSubplan: React.FC<ISectionSubplan<ISubplan>> = ({ listSubplans, for
           <Form.Item style={{ width: '100%' }} name={['user', 'discount']} label="descuento en $">
             <InputNumber placeholder='' onChange={handleDiscount} />
           </Form.Item>
-          <Form.Item style={{ width: '100%' }} name={['user', 'value_cancel']} label="Valor a cancelar">
+          <Form.Item style={{ width: '100%' }} name={['user', 'total_plan']} label="Valor a cancelar">
             <InputNumber disabled placeholder='' />
           </Form.Item>
         </Col>

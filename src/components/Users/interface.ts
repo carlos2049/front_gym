@@ -40,10 +40,10 @@ export interface IProfiles {
 export interface IValues {
   user: {
     perfil: number,
-    // id_sub_plan: number,
-    // value_sub_plan: number,
-    // amount_months: number,
-    // total_plan: number,
+    subplan: number,
+    select_value_sub_plan: number,
+    amount_months: number,
+    total_plan: number,
     name: string,
     firstLastname: string,
     secondLastname: string,

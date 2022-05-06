@@ -78,10 +78,31 @@ const CreateUser: React.FC<ICreateUSer> = ({ visible, handleModalVisible, fetchU
   const onFinish = (values: IValues) => {
 
     const { user } = values
-    console.log('jskjdksjad', user)
+
+
+    let value_sub_plan = null
+
+    const subplanFinded = listSubplans.rows.find(x => x.id === user.subplan)
+    if (subplanFinded) {
+      switch (user.select_value_sub_plan) {
+        case 1:
+          value_sub_plan = subplanFinded.monthly_value
+          break;
+        case 2:
+          value_sub_plan = subplanFinded.quarterly_value
+          break;
+        case 3:
+          value_sub_plan = subplanFinded.semester_value
+          break;
+        case 4:
+          value_sub_plan = subplanFinded.annual_value
+          break;
+      }
+    }
+
     const userObjSend: IUser = {
       id_perfil: user.perfil,
-      // id_sub_plan: values.sub,
+      id_sub_plan: user.subplan,
       rut: user.rut,
       names: user.name,
       first_last_name: user.firstLastname,
@@ -98,16 +119,16 @@ const CreateUser: React.FC<ICreateUSer> = ({ visible, handleModalVisible, fetchU
       weekly_hours: user.weeklyHours,
       password: user.pass,
       observations: user.observations,
-      // value_sub_plan: number,
-      // amount_months: number,
-      // total_plan: number,
+      value_sub_plan: value_sub_plan,
+      amount_months: user.amount_months,
+      total_plan: user.total_plan,
     } as IUser
 
-    // if (userObj) {
-    //   dispatch(updateUser({ ...userObjSend }, userObj.id, handleModal))
-    // } else {
-    //   dispatch(createUser({ ...userObjSend }, handleModal))
-    // }
+    if (userObj) {
+      dispatch(updateUser({ ...userObjSend }, userObj.id, handleModal))
+    } else {
+      dispatch(createUser({ ...userObjSend }, handleModal))
+    }
   };
 
   const handleSelectProfile = (e: Event) => {
@@ -128,7 +149,6 @@ const CreateUser: React.FC<ICreateUSer> = ({ visible, handleModalVisible, fetchU
     },
   };
 
-  console.log('listSubplans', listSubplans)
   return (<>
     <Modal
       width={"70%"}
@@ -220,6 +240,7 @@ const CreateUser: React.FC<ICreateUSer> = ({ visible, handleModalVisible, fetchU
               <SectionSubplan
                 listSubplans={listSubplans.rows}
                 form={form}
+                subplan={userObj?.id_sub_plan}
               />
               : ''
           }
