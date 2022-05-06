@@ -1,4 +1,5 @@
 
 export interface ISectionSubplan<T> {
-  listSubplans: T[]
+  listSubplans: T[],
+  form: any,
 }

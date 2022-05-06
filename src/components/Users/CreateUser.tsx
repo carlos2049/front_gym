@@ -43,6 +43,7 @@ const CreateUser: React.FC<ICreateUSer> = ({ visible, handleModalVisible, fetchU
     if (userObj) {
       form.setFieldsValue({
         user: {
+          // value_cancel: 1000,
           name: userObj?.names,
           perfil: userObj?.id_perfil,
           rut: userObj?.rut,
@@ -59,7 +60,8 @@ const CreateUser: React.FC<ICreateUSer> = ({ visible, handleModalVisible, fetchU
           salaryBase: userObj?.salary_base,
           weeklyHours: userObj?.weekly_hours,
           pass: userObj?.password,
-          observations: userObj.observations
+          observations: userObj.observations,
+          subplan: userObj?.id_sub_plan
         }
       })
       setProfileSelected(Number(userObj.id_perfil))
@@ -76,6 +78,7 @@ const CreateUser: React.FC<ICreateUSer> = ({ visible, handleModalVisible, fetchU
   const onFinish = (values: IValues) => {
 
     const { user } = values
+    console.log('jskjdksjad', user)
     const userObjSend: IUser = {
       id_perfil: user.perfil,
       // id_sub_plan: values.sub,
@@ -94,17 +97,17 @@ const CreateUser: React.FC<ICreateUSer> = ({ visible, handleModalVisible, fetchU
       salary_base: user.salaryBase ? user.salaryBase : null,
       weekly_hours: user.weeklyHours,
       password: user.pass,
-      observations: user.observations
+      observations: user.observations,
       // value_sub_plan: number,
       // amount_months: number,
       // total_plan: number,
     } as IUser
 
-    if (userObj) {
-      dispatch(updateUser({ ...userObjSend }, userObj.id, handleModal))
-    } else {
-      dispatch(createUser({ ...userObjSend }, handleModal))
-    }
+    // if (userObj) {
+    //   dispatch(updateUser({ ...userObjSend }, userObj.id, handleModal))
+    // } else {
+    //   dispatch(createUser({ ...userObjSend }, handleModal))
+    // }
   };
 
   const handleSelectProfile = (e: Event) => {
@@ -213,7 +216,12 @@ const CreateUser: React.FC<ICreateUSer> = ({ visible, handleModalVisible, fetchU
           </Form.Item> */}
 
           {
-            profileSelected === 2 ? <SectionSubplan listSubplans={listSubplans.rows} /> : ''
+            profileSelected === 2 ?
+              <SectionSubplan
+                listSubplans={listSubplans.rows}
+                form={form}
+              />
+              : ''
           }
 
           <Form.Item name={['user', 'observations']} label="Observaciones" rules={[{ type: 'string' }]}>

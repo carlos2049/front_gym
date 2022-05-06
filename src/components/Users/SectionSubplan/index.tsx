@@ -1,13 +1,57 @@
-import { useState } from "react"
-import { Form, Select, Table, Input, Radio, Space, InputNumber, Row, Col } from "antd"
+import { useEffect, useState } from "react"
+import { Form, Select, Input, Radio, Space, InputNumber, Row, Col, RadioChangeEvent } from "antd"
 import { ISubplan } from "../../../interfaces/state"
 import { ISectionSubplan } from "./interface"
 import './styles.less'
+import { valueType } from "antd/lib/statistic/utils"
+import userEvent from "@testing-library/user-event"
 
 const { Option } = Select
-const SectionSubplan: React.FC<ISectionSubplan<ISubplan>> = ({ listSubplans }) => {
+
+interface IRES {
+  registrationValue: number,
+  discount: number,
+  selectSub: number,
+  total: number
+}
+
+const SectionSubplan: React.FC<ISectionSubplan<ISubplan>> = ({ listSubplans, form }) => {
 
   const [selectSubplan, setSelectSubplan] = useState<ISubplan>()
+  const [registrationValue, setRegistrationValue] = useState<number>(0)
+  const [subplan, setSubplan] = useState<number | null>(null)
+  const [total, setTotal] = useState<number>(0)
+  const [selectSub, setSelectSub] = useState<number>(0)
+
+  const [nuevo, setNuevo] = useState<IRES>({
+    registrationValue: 0,
+    discount: 0,
+    selectSub: 0,
+    total: 0
+  })
+
+  useEffect(() => {
+    const { user } = form.getFieldValue()
+    console.log('useeffet', user)
+    setSubplan(user.subplan)
+  }, [])
+
+  useEffect(() => {
+    const result = (nuevo.selectSub + nuevo.registrationValue) - nuevo.discount
+    setTotal(result)
+  }, [nuevo])
+
+  useEffect(() => {
+    // setUsuario(user)
+    form.setFieldsValue({
+      user: {
+        value_cancel: total,
+        // subplan: 3
+      }
+    })
+    // eslint-disable-next-line
+  }, [total])
+
 
 
   const handleSelectSubplan = (e: number) => {
@@ -16,6 +60,43 @@ const SectionSubplan: React.FC<ISectionSubplan<ISubplan>> = ({ listSubplans }) =
     // console.log('sahdkjsakjd', subplanFinded)
   }
 
+  const handleRegistrationValue = (value: valueType) => {
+    setNuevo({ ...nuevo, registrationValue: Number(value) })
+    // const result = value
+    // form.setFieldsValue({
+    //   user: {
+    //     value_cancel: 1000,
+    //   }
+    // })
+  }
+
+  const handleDiscount = (value: valueType) => {
+    // setDiscount(Number(value))
+    setNuevo({ ...nuevo, discount: Number(value) })
+
+  }
+
+  const handleSelectRadio = (value: RadioChangeEvent) => {
+    if (selectSubplan) {
+      if (value.target.value === 1) {
+        setNuevo({ ...nuevo, selectSub: selectSubplan.monthly_value })
+
+        // setSelectSub(selectSubplan.monthly_value)
+      }
+      if (value.target.value === 2) {
+        setNuevo({ ...nuevo, selectSub: selectSubplan.quarterly_value })
+      }
+      if (value.target.value === 3) {
+        setNuevo({ ...nuevo, selectSub: selectSubplan.semester_value })
+      }
+      if (value.target.value === 4) {
+        setNuevo({ ...nuevo, selectSub: selectSubplan.annual_value })
+
+      }
+    }
+  }
+
+  console.log('kasjdkjsajkd', subplan)
   return (
     <>
       <Form.Item
@@ -52,10 +133,11 @@ const SectionSubplan: React.FC<ISectionSubplan<ISubplan>> = ({ listSubplans }) =
       </div>
       <Row gutter={[16, 16]}>
         <Col span={6}>
-          <Form.Item>
+          <Form.Item name={['user', 'select_value_sub_plan']}>
             <Radio.Group
-            // onChange={this.onChange} 
-            // value={value}
+              onChange={handleSelectRadio}
+              // value={2}
+              disabled={subplan ? false : true}
             >
               <Space direction="vertical">
                 <Radio value={1}>Valor mensual</Radio>
@@ -64,7 +146,6 @@ const SectionSubplan: React.FC<ISectionSubplan<ISubplan>> = ({ listSubplans }) =
                 <Radio value={4}>Valor anual</Radio>
               </Space>
             </Radio.Group>
-
           </Form.Item>
         </Col>
         <Col span={8}>
@@ -77,10 +158,10 @@ const SectionSubplan: React.FC<ISectionSubplan<ISubplan>> = ({ listSubplans }) =
         </Col>
         <Col span={8}>
           <Form.Item style={{ width: '100%' }} name={['user', 'registration_value']} label="valor matricula">
-            <InputNumber placeholder='' />
+            <InputNumber name="registration_value" placeholder='' onChange={handleRegistrationValue} />
           </Form.Item>
           <Form.Item style={{ width: '100%' }} name={['user', 'discount']} label="descuento en $">
-            <InputNumber placeholder='' />
+            <InputNumber placeholder='' onChange={handleDiscount} />
           </Form.Item>
           <Form.Item style={{ width: '100%' }} name={['user', 'value_cancel']} label="Valor a cancelar">
             <InputNumber disabled placeholder='' />
