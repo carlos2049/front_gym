@@ -34,6 +34,7 @@ const SectionSubplan: React.FC<ISectionSubplan<ISubplan>> = ({ listSubplans, for
   useEffect(() => {
     const subplanFinded = listSubplans.find(x => x.id === subplan)
     setSelectSubplan(subplanFinded)
+    // eslint-disable-next-line
   }, [subplan])
 
   useEffect(() => {

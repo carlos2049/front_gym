@@ -5,7 +5,7 @@ import { Modal, Button, Form, Input, Select, InputNumber } from 'antd';
 import { createUser, updateUser, fetchAllProfiles, fetchAllSubplans } from '../../services/endpoints'
 import { useDispatch, useSelector } from 'react-redux'
 import { IUser, IProfiles, IValues } from './interface';
-import { IState, ISubplan } from '../../interfaces/state';
+import { IState } from '../../interfaces/state';
 const { Option } = Select;
 const { TextArea } = Input
 
@@ -33,9 +33,11 @@ const CreateUser: React.FC<ICreateUSer> = ({ visible, handleModalVisible, fetchU
   // const state: boolean = true
 
   useEffect(() => {
-    dispatch(fetchAllProfiles(true))
-    dispatch(fetchAllSubplans('all', 1, true))
-  }, [dispatch])
+    if (visible) {
+      dispatch(fetchAllProfiles(true))
+      dispatch(fetchAllSubplans('all', 1, true))
+    }
+  }, [dispatch, visible])
 
 
   useEffect(() => {
