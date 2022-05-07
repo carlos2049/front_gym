@@ -13,6 +13,7 @@ import {
 import { Button, Popconfirm, Space, Tag } from "antd"
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import { IState } from '../../interfaces/state'
+import { limit } from '../../config';
 
 
 const Subplans: React.FC = () => {
@@ -23,7 +24,7 @@ const Subplans: React.FC = () => {
   const { listSubplans, subplan } = useSelector((state: IState) => state.subplans)
   const dispatch = useDispatch()
 
-  const limit: number = 9
+
   useEffect(() => {
     dispatch(fetchAllSubplans(limit, page, state))
   }, [dispatch, page, state])

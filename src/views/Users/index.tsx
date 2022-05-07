@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { Space, Button, Popconfirm, Tag } from 'antd';
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 // import { fetchAllUsers } from '../../store/slices/users'
+
 import { ActivateAndDeactivate, getUser, resetUser, searchUsers, fetchAllUsers } from '../../services/endpoints'
 import { useDispatch, useSelector } from 'react-redux'
 import TableDefault from '../../components/TableDefault';
@@ -9,6 +10,7 @@ import { IState } from '../../interfaces/state'
 import './styles.less'
 
 import CreateUser from '../../components/Users/CreateUser';
+import { limit } from '../../config';
 
 const Users = () => {
   const [page, setPage] = useState<number>(1)
@@ -16,8 +18,6 @@ const Users = () => {
   const [modalVisible, setModalVisible] = useState<boolean>(false)
 
   const { list, user } = useSelector((state: IState) => state.users)
-
-  const limit: number = 10
 
   const dispatch = useDispatch()
   useEffect(() => {

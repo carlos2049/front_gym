@@ -6,6 +6,7 @@ import TableDefault from "../../components/TableDefault"
 import PlanModal from "../../components/plans";
 import { useDispatch, useSelector } from 'react-redux'
 import { IState } from '../../interfaces/state'
+import { limit } from "../../config";
 
 
 const Plan: React.FC = () => {
@@ -15,7 +16,6 @@ const Plan: React.FC = () => {
   const [modalVisible, setModalVisible] = useState<boolean>(false)
 
 
-  const limit: number = 10
   const dispatch = useDispatch()
   useEffect(() => {
     dispatch(fetchAllPlans(limit, page, state))
