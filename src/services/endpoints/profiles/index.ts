@@ -16,7 +16,10 @@ export const ActivateAndDeactivateProfile = (id: number, callback: () => void) =
 }
 
 export const fetchAllProfiles = (state: boolean) => async (distpatch: (arg0: { payload: any; type: string }) => void) => {
-  const res = await axios.get(`${URL}/profiles?state=${state}`)
+  const header = ' Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjE1LCJpYXQiOjE2NTMwODExOTgsImV4cCI6MTY1MzI1Mzk5OH0.K0zbi3BBOP5GZXd6yRsp1fvnJndqhI4lb_Fl8qnQqUQ'
+  const res = await axios.get(`${URL}/profiles?state=${state}`,
+    { headers: { Authorization: header } }
+  )
   if (res.data && res.data.success) {
     distpatch(setProfileList(res.data.profiles))
   } else {
