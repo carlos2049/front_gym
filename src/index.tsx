@@ -13,6 +13,7 @@ import reportWebVitals from './reportWebVitals';
 import 'antd/dist/antd.min.css'
 import './styles.less'
 
+
 ReactDOM.render(
   <Provider store={store}>
     <ConfigProvider locale={localeES}>
