@@ -1,12 +1,10 @@
 import { message } from "antd";
+import api from '../../../config/api';
 import { setPlanList, setPlan } from '../../../store/slices/plans'
 
-import axios from "axios";
-
-const URL = process.env.REACT_APP_API_BASE_URL
 
 export const fetchAllPlans = (limit: number | string = 5, page: number, state: boolean) => async (distpatch: (arg0: { payload: any; type: string }) => void) => {
-  const res = await axios.get(`${URL}/plans?limit=${limit}&&page=${page}&&state=${state}`)
+  const res = await api.get(`/plans?limit=${limit}&&page=${page}&&state=${state}`)
   if (res.data.success) {
     const obj = {
       count: res.data.count,
@@ -19,7 +17,7 @@ export const fetchAllPlans = (limit: number | string = 5, page: number, state: b
 }
 
 export const searchPlans = (words: string) => async (distpatch: (arg0: { payload: any; type: string }) => void) => {
-  const res = await axios.get(`${URL}/plans/search?words=${words}`)
+  const res = await api.get(`/plans/search?words=${words}`)
   if (res.data && res.data.success) {
     const obj = {
       count: res.data.count,
@@ -34,7 +32,7 @@ export const resetPlan = () => async (distpatch: (arg0: { payload: any; type: st
 }
 
 export const getPlan = (id: number) => async (distpatch: (arg0: { payload: any; type: string }) => void) => {
-  const res = await axios.get(`${URL}/plans/${id}`)
+  const res = await api.get(`/plans/${id}`)
   if (res.data && res.data.success) {
     distpatch(setPlan(res.data.plan))
   } else {
@@ -44,7 +42,7 @@ export const getPlan = (id: number) => async (distpatch: (arg0: { payload: any; 
 }
 
 export const ActivateAndDeactivatePlan = (id: number, callback: () => void) => async (distpatch: (arg0: { payload: any; type: string }) => void) => {
-  const res = await axios.put(`${URL}/plans/plan/${id}`)
+  const res = await api.put(`/plans/plan/${id}`)
   if (res.data && res.data.success) {
     message.success(res.data.message);
   } else {
@@ -54,7 +52,7 @@ export const ActivateAndDeactivatePlan = (id: number, callback: () => void) => a
 }
 
 export const createPlan = (plan: Object, handleModal: (visible: boolean) => void) => async (distpatch: (arg0: { payload: any; type: string }) => void) => {
-  const res = await axios.post(`${URL}/plans`, plan)
+  const res = await api.post(`/plans`, plan)
   if (res.status === 200 && res.data.success) {
     message.success('plan creado exitosamente');
   } else {
@@ -65,7 +63,7 @@ export const createPlan = (plan: Object, handleModal: (visible: boolean) => void
 }
 
 export const updatePlan = async (plan: object, id: number, callback: any) => {
-  const res = await axios.put(`${URL}/plans/${id}`, plan)
+  const res = await api.put(`/plans/${id}`, plan)
   if (res.data.success) {
     message.success(res.data.message);
   } else {

@@ -1,12 +1,10 @@
-import axios from 'axios'
+import api from '../../../config/api';
 import { setUserList, setUser } from '../../../store/slices/users'
 import { message } from 'antd';
 
-const URL = process.env.REACT_APP_API_BASE_URL
-
 
 export const fetchAllUsers = (limit = 5, page: number, state: boolean) => async (distpatch: (arg0: { payload: any; type: string }) => void) => {
-  const res = await axios.get(`${URL}/users?limit=${limit}&&page=${page}&&state=${state}`)
+  const res = await api.get(`/users?limit=${limit}&&page=${page}&&state=${state}`)
   if (res.data.success) {
     distpatch(setUserList(res.data))
   } else {
@@ -15,7 +13,7 @@ export const fetchAllUsers = (limit = 5, page: number, state: boolean) => async 
 }
 
 export const getUser = (id: number) => async (distpatch: (arg0: { payload: any; type: string }) => void) => {
-  const res = await axios.get(`${URL}/users/user/${id}`)
+  const res = await api.get(`/users/user/${id}`)
   if (res.data.success && res.data.user) {
     distpatch(setUser(res.data.user))
     // callback()
@@ -29,7 +27,7 @@ export const resetUser = () => async (distpatch: (arg0: { payload: any; type: st
 }
 
 export const ActivateAndDeactivate = (id: number, callback: any) => async (distpatch: (arg0: { payload: any; type: string }) => void) => {
-  const res = await axios.put(`${URL}/users/${id}`)
+  const res = await api.put(`/users/${id}`)
   if (res.data && res.data.success) {
     message.success(res.data.message);
   } else {
@@ -40,7 +38,7 @@ export const ActivateAndDeactivate = (id: number, callback: any) => async (distp
 }
 
 export const updateUser = (user: object, id: number, callback: any) => async (distpatch: (arg0: { payload: any; type: string }) => void) => {
-  const res = await axios.put(`${URL}/users/user/${id}`, user)
+  const res = await api.put(`/users/user/${id}`, user)
   if (res.data.success) {
     message.success(res.data.message);
   } else {
@@ -53,7 +51,7 @@ export const updateUser = (user: object, id: number, callback: any) => async (di
 
 export const createUser = (user: Object, handleModal: any) => async (distpatch: (arg0: { payload: any; type: string }) => void) => {
   console.log('hhjahsa', user)
-  const res = await axios.post(`${URL}/users`, user)
+  const res = await api.post(`/users`, user)
   if (res.status === 200 && res.data.success) {
     message.success('Usuario creado exitosamente');
   } else {
@@ -64,7 +62,7 @@ export const createUser = (user: Object, handleModal: any) => async (distpatch: 
 }
 
 export const searchUsers = (words: string) => async (distpatch: (arg0: { payload: any; type: string }) => void) => {
-  const res = await axios.get(`${URL}/users/search?words=${words}`)
+  const res = await api.get(`/users/search?words=${words}`)
   if (res.data && res.data.success) {
     distpatch(setUserList(res.data))
   }
