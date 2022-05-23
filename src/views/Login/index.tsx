@@ -1,9 +1,60 @@
+import { Form, Input, Button, Checkbox } from 'antd';
+import './styles.less'
 
 
 const Login = () => {
+
+  const onFinish = (values: Object) => {
+    console.log('Success:', values);
+  };
+
+  const onFinishFailed = (errorInfo: any) => {
+    console.log('Failed:', errorInfo);
+  };
+
   return (
     <>
-      <h1>Login</h1>
+      <div className='content' >
+        <div className='form'
+        >
+          <Form
+            name="basic"
+            labelCol={{ span: 8 }}
+            wrapperCol={{ span: 16 }}
+            // initialValues={{ remember: true }}
+            onFinish={onFinish}
+            onFinishFailed={onFinishFailed}
+            autoComplete="off"
+            layout='vertical'
+          >
+            <Form.Item
+              label="Rut"
+              name="rut"
+              rules={[{ required: true, message: 'Ingrese Rut' }]}
+            >
+              <Input />
+            </Form.Item>
+
+            <Form.Item
+              label="Contraseña"
+              name="password"
+              rules={[{ required: true, message: 'Ingrese contraseña' }]}
+            >
+              <Input.Password />
+            </Form.Item>
+
+            {/* <Form.Item name="remember" valuePropName="checked" wrapperCol={{ offset: 8, span: 16 }}>
+          <Checkbox>Remember me</Checkbox>
+        </Form.Item> */}
+
+            <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+              <Button type="primary" htmlType="submit">
+                Ingresar
+              </Button>
+            </Form.Item>
+          </Form>
+        </div>
+      </div>
     </>
   )
 }
