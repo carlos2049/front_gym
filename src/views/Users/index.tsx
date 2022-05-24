@@ -12,6 +12,7 @@ import CreateUser from '../../components/Users/CreateUser';
 import { limit } from '../../config';
 
 const Users = () => {
+  // localStorage.setItem('accessToken', '')
   const [page, setPage] = useState<number>(1)
   const [state, setState] = useState<boolean>(true)
   const [modalVisible, setModalVisible] = useState<boolean>(false)

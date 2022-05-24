@@ -1,5 +1,7 @@
 import { message } from "antd";
 import axios from "axios";
+import { setAccessToken } from '../../../store/slices/auth'
+
 import { appApiBaseUrl } from '../../../config'
 
 
@@ -9,7 +11,8 @@ export const login = ({ rut, password }: { rut: string, password: string }) => a
     password
   })
   if (res.data && res.data.success) {
-    localStorage.setItem('accessToken', res.data.token)
+    // localStorage.setItem('accessToken', res.data.token)
+    distpatch(setAccessToken(res.data.token))
 
   } else if (res.data && !res.data.success) {
     message.error(res.data.message);

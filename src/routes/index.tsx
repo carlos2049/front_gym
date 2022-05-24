@@ -1,5 +1,7 @@
-import React, { Suspense, lazy } from 'react';
+import React, { Suspense, lazy, useEffect, useState } from 'react';
 import { BrowserRouter, Navigate, Route, Routes as Switch, } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+
 // import Profile from '../views/Profile';
 // import DefaultLayout from '../layouts/DefaultLayout';
 import Users from '../views/Users';
@@ -11,13 +13,35 @@ import Login from '../views/Login';
 const lazyLoad = (component: any) => lazy(async () => component);
 const DefaultLayout = lazyLoad(import('../layouts/DefaultLayout'))
 const Routes = () => {
-  const bol = false
+  const [log, setLog] = useState<boolean>(false)
+  const dispatch = useDispatch()
+  const { accessToken } = useSelector((state: any) => state.auth)
+
+  useEffect(() => {
+    const isToken = !!localStorage.getItem('accessToken')
+    if (accessToken || isToken) {
+      localStorage.setItem('accessToken', accessToken || localStorage.getItem('accessToken'))
+      setLog(true)
+    }
+    if (!isToken) {
+      setLog(false)
+
+    }
+    console.log('isToken', isToken);
+    console.log('accessToken', accessToken);
+  }, [accessToken])
+
+
   return (
     <Suspense fallback={null} >
       <BrowserRouter>
         {
-          bol ?
+          log ?
             <Switch>
+              <Route
+                path="*"
+                element={<Navigate to="/" replace />}
+              />
               <Route path="/" element={<DefaultLayout />}>
                 <Route path="users" element={<Users />} />
                 <Route path="permissions" element={<Permissions />} />
