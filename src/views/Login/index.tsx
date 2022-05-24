@@ -1,13 +1,20 @@
 import { Form, Input, Button, Checkbox } from 'antd';
+import { useDispatch, useSelector } from 'react-redux'
+import { login } from '../../services/endpoints'
 import './styles.less'
 
+interface ILogin {
+  rut: string,
+  password: string
+}
 
 const Login = () => {
+  const dispatch = useDispatch()
 
-  const onFinish = (values: Object) => {
-    console.log('Success:', values);
-  };
-
+  const onFinish = (values: ILogin) => {
+    const { rut, password } = values
+    dispatch(login({ rut, password }))
+  }
   const onFinishFailed = (errorInfo: any) => {
     console.log('Failed:', errorInfo);
   };

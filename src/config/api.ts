@@ -1,6 +1,7 @@
 import axios from 'axios';
+import { appApiBaseUrl } from './index'
 
 export default axios.create({
-  baseURL: process.env.REACT_APP_API_BASE_URL,
+  baseURL: appApiBaseUrl,
   headers: { 'Authorization': `Bearer ${localStorage.getItem('accessToken')}` },
 });
