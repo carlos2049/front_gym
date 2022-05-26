@@ -15,21 +15,20 @@ const DefaultLayout = lazyLoad(import('../layouts/DefaultLayout'))
 const Routes = () => {
   const [log, setLog] = useState<boolean>(false)
   const dispatch = useDispatch()
-  const { accessToken } = useSelector((state: any) => state.auth)
+  const { accessToken, login } = useSelector((state: any) => state.auth)
 
   useEffect(() => {
     const isToken = !!localStorage.getItem('accessToken')
-    if (accessToken || isToken) {
-      localStorage.setItem('accessToken', accessToken || localStorage.getItem('accessToken'))
-      setLog(true)
-    }
-    if (!isToken) {
-      setLog(false)
 
+    if (isToken) {
+      setLog(true)
+    } else {
+      setLog(false)
     }
-    console.log('isToken', isToken);
-    console.log('accessToken', accessToken);
-  }, [accessToken])
+
+  }, [accessToken, login])
+
+  // console.log('log', log);
 
 
   return (
