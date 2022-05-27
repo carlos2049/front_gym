@@ -1,6 +1,9 @@
 import { createElement } from 'react';
 import { Outlet, Link } from "react-router-dom";
-import { Layout, Menu } from 'antd';
+import { Button, Layout, Menu } from 'antd';
+import { setAccessToken, setIsLogin } from '../store/slices/auth'
+import { useDispatch, useSelector } from 'react-redux'
+
 
 import {
   MenuUnfoldOutlined,
@@ -17,10 +20,17 @@ const { Header, Sider, Content } = Layout;
 const { SubMenu } = Menu;
 
 const DefaultLayout = () => {
+
+  const distpatch = useDispatch()
   const [collapsed, setCollapsed] = useState<boolean>(false)
   const toggle = () => {
     setCollapsed(!collapsed);
   };
+
+  const logOut = () => {
+    localStorage.setItem('accessToken', '')
+    distpatch(setAccessToken(false))
+  }
 
   return (
     <Layout className='layout'>
@@ -47,6 +57,7 @@ const DefaultLayout = () => {
             className: 'trigger',
             onClick: toggle,
           })}
+          <Button onClick={logOut} >salir</Button>
         </Header>
         <Content
           className="site-layout-background"
